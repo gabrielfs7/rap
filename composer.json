@@ -1,0 +1,30 @@
+{
+    "name": "gabrielfs7/easy-json-doc",
+    "description": "A PHP library that provides a very simple way to generate Json Documentation based on your PHP classes",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gabriel Felipe Soares",
+            "email": "gabrielfs7@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5"
+    },
+    "require-dev" : {
+        "phpunit/phpunit" : "4.0.x",
+        "squizlabs/php_codesniffer" : "*",
+        "phpmd/phpmd" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "GSoares\\EasyJsonDoc\\": "src/"
+        },
+        "psr-0": { 
+            "GSoares\\EasyJsonDoc\\": "src/" 
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
