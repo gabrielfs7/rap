@@ -1,11 +1,13 @@
 easy-json-doc
 =============
 
-"Easy Json Doc" provides a very simple way to generate Json Documentation based on your PHP classes
+"Easy Json Doc" provides a very simple way to generate Json Documentation based on your PHP classes.
 
+### DTOs with docs
 
-# Sample
+DTOs classes with non and sample value.
 
+```php
 <?php 
 namespace Sample;
 
@@ -65,6 +67,11 @@ class Group
 $documentor = new \GSaores\EasyJsonDoc\Serializer\JsonSerializer();
 echo $documentor->serialize('Sample\User');
 ?>
+```
+
+### Output
+
+The output of the code above
 
 <pre>
 {
