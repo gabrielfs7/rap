@@ -16,11 +16,11 @@ class JsonSerializerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSerialize()
     {
-        $this->markTestIncomplete('See how to compare entire JSON...');
-
         $filler = new JsonSerializer();
 
-        $filler->serialize('\Sample\User');
+        var_dump($filler->serialize('\Sample\User'));
+
+        $this->markTestIncomplete('See how to compare entire JSON...'); //FIXME
     }
 }
 

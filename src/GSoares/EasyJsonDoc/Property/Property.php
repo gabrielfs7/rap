@@ -17,6 +17,11 @@ class Property
     /**
      * @var string
      */
+    public $name;
+
+    /**
+     * @var string
+     */
     public $type;
 
     /**

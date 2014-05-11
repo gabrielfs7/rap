@@ -1,108 +1,80 @@
 <?php
 namespace GSoares\EasyJsonDoc\Property;
 
+use GSoares\EasyJsonDoc\Parser\CommentLineParser;
+use GSoares\EasyJsonDoc\Exception\TypeNotFoundException;
+
 class PropertyRetriever
 {
 
-    public function retrieve($class, $property)
+    /**
+     * @var CommentLineParser
+     */
+    private $lineParser;
+
+    /**
+     * @var PropertyFactory
+     */
+    private $propertyFactory;
+
+    /**
+     * @param CommentLineParser $lineParser
+     * @param PropertyFactory $propertyFactory
+     */
+    public function __construct(CommentLineParser $lineParser = null, PropertyFactory $propertyFactory = null)
     {
-        $dto = new Property();
-
-        $this->getPropertyType((new \ReflectionClass($class))->getProperty($property), $dto);
-
-        return $dto;
+        $this->lineParser = $lineParser ?: new CommentLineParser();
+        $this->propertyFactory = $propertyFactory ?: new PropertyFactory();
     }
 
     /**
-     * @param \ReflectionProperty $property
-     * @param Property $prop
+     * @param string $className
+     * @param string $propertyName
+     * @return Property
+     * @throws \InvalidArgumentException
      */
-    private function getPropertyType(\ReflectionProperty $reflectionProperty, Property $property)
+    public function retrieve($className, $propertyName)
     {
-        foreach (explode(PHP_EOL, $reflectionProperty->getDocComment()) as $commentLine) {
-            if ($type = $this->findType($commentLine)) {
-                $this->configType($property, $type);
+        $type = null;
+        $sample = null;
+
+        foreach ($this->getComment($className, $propertyName) as $commentLine) {
+            $found = $this->lineParser->findType($commentLine);
+
+            if ($found) {
+                $type = $found;
             }
 
-            if ($sample = $this->findSample($commentLine)) {
-                $property->sample = $sample;
+            $found = $this->lineParser->findSample($commentLine);
+
+            if ($found) {
+                $sample = $found;
+            }
+
+            if ($type && $sample) {
+                break;
             }
         }
 
-        if (!$property->type) {
-            throw new \InvalidArgumentException(
-                'The property ' . $reflectionProperty->getName() .
-                ' of class ' . $reflectionProperty->getDeclaringClass()->getName() .
-                ' has no defined type. Please use the @var annotation at property PHPDoc'
+        $propertyDto = $this->propertyFactory->create($propertyName, $type, $sample);
+
+        if (!$type) {
+            throw new TypeNotFoundException(
+                'Property ' . $propertyName . ' of class ' . $className .
+                 ' has no type. Please use the @var annotation at property PHPDoc'
             );
         }
+
+        return $propertyDto;
     }
 
     /**
-     * @param string $commentLine
-     * @return string
-     */
-    private function findSample($commentLine)
-    {
-        if (!$var = strstr($commentLine, Property::ANNOTATION_SAMPLE . ' ')) {
-            return;
-        }
-
-        return preg_replace('/' . addslashes(Property::ANNOTATION_SAMPLE) . ' /', '', $var);
-    }
-
-    /**
-     * @param string $commentLine
-     * @return string
-     */
-    private function findType($commentLine)
-    {
-        if (!$var = strstr($commentLine, '@var ')) {
-            return;
-        }
-
-        $var = preg_replace('/@var /', '', $var);
-        $parts = explode(' ', $var);
-
-        return isset($parts[0]) ? $parts[0] : $var;
-    }
-
-    /**
-     * @param Property $property
-     * @param string $type
-     */
-    private function configType(Property $property, $type)
-    {
-        $property->type = str_replace('[]', '', $type);
-
-        if (strstr($type, '[]') !== false) {
-            $property->isArray = true;
-        }
-
-        if (in_array(strtolower($type), $this->getAllowedTypes())) {
-            $property->isPrimitive = true;
-        }
-
-        if (class_exists($property->type)) {
-            $property->isClass = true;
-        }
-    }
-
-    /**
+     * @param string $className
+     * @param string $propertyName
      * @return string[]
      */
-    private function getAllowedTypes()
+    private function getComment($className, $propertyName)
     {
-        return [
-            Property::STRING,
-            Property::INT,
-            Property::INTEGER,
-            Property::DECIMAL,
-            Property::FLOAT,
-            Property::DATE,
-            Property::DATETIME,
-            Property::BOOL,
-            Property::BOOLEAN
-        ];
+        return explode(PHP_EOL, (new \ReflectionClass($className))->getProperty($propertyName)->getDocComment());
     }
 }

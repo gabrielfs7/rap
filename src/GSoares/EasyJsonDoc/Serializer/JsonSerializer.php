@@ -2,6 +2,7 @@
 namespace GSoares\EasyJsonDoc\Serializer;
 
 use GSoares\EasyJsonDoc\Property\PropertyRetriever;
+use GSoares\EasyJsonDoc\Property\PropertyValueSelector;
 use GSoares\EasyJsonDoc\Property\Property;
 
 class JsonSerializer
@@ -12,11 +13,19 @@ class JsonSerializer
     private $propertyRetriever;
 
     /**
+     * @var PropertyValueSelector
+     */
+    private $propertyValueSelector;
+
+    /**
      * @param PropertyRetriever $propertyRetriever
      */
-    public function __construct(PropertyRetriever $propertyRetriever = null)
-    {
+    public function __construct(
+        PropertyRetriever $propertyRetriever = null,
+        PropertyValueSelector $propertyValueSelector = null
+    ) {
         $this->propertyRetriever = $propertyRetriever ?: new PropertyRetriever();
+        $this->propertyValueSelector = $propertyValueSelector ?: new PropertyValueSelector();
     }
 
     public function serialize($class)
@@ -33,64 +42,31 @@ class JsonSerializer
         $dto = new \stdClass();
 
         foreach ((new \ReflectionClass($class))->getProperties(\ReflectionProperty::IS_PUBLIC) as $prop) {
-            $property = $this->propertyRetriever->retrieve($class, $prop->getName());
-            $name = $prop->getName();
-
-            if ($property->isArray) {
-                $dto->$name = [$this->internalSerialize($property->type)];
-
-                continue;
-            }
-
-            if ($property->isPrimitive) {
-                $dto->$name = $this->fill($property->type, $property->sample);
-
-                continue;
-            }
-
-            if ($property->isClass) {
-                $dto->$name = $this->internalSerialize($property->type);
-
-                continue;
-            }
+            $this->fillProperty($this->propertyRetriever->retrieve($class, $prop->getName()), $dto);
         }
 
         return $dto;
     }
 
     /**
-     * @param string $value
-     * @param string $sample
-     * @return string|number|boolean
+     * @param Property $property
+     * @param \stdClass $dto
+     * @return mixed
      */
-    private function fill($value, $sample = null)
+    private function fillProperty(Property $property, \stdClass $dto)
     {
-        if ($sample) {
-            return $sample;
+        $name = $property->name;
+
+        if ($property->isArray) {
+            return $dto->$name = [$this->internalSerialize($property->type)];
         }
 
-        if ($value === Property::DATE) {
-            return date('Y-m-d');
+        if ($property->isPrimitive) {
+            return $dto->$name = $this->propertyValueSelector->select($property);
         }
 
-        if ($value === Property::DATETIME) {
-            return date('Y-m-d H:i:s');
-        }
-
-        if ($value === Property::INT || $value === Property::INTEGER) {
-            return 123;
-        }
-
-        if ($value === Property::FLOAT || $value === Property::DECIMAL) {
-            return 12.3;
-        }
-
-        if ($value === Property::BOOLEAN || $value === Property::BOOL) {
-            return true;
-        }
-
-        if ($value === Property::STRING) {
-            return 'Lorem Ipsum';
+        if ($property->isClass) {
+            return $dto->$name = $this->internalSerialize($property->type);
         }
     }
 }
