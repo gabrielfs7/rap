@@ -6,13 +6,12 @@ class RestService
     /**
      * @EasyJsonDoc/Resource(
      *     "method" => "GET",
+     *     "uri" => "api/user/{id}",
      *     "help" => "
      *          Resource to get (teste) user é óú list.
      *          One more line hehe...
-     *     ",
-     *     "uri" => "api/user/{id}"
+     *     "
      * )
-     * @param int Does not care...
      * @EasyJsonDoc/Param(
      *     "name" => "token",
      *     "type" => "string",
@@ -39,6 +38,7 @@ class RestService
      *     "return" => "Sample\Error[]",
      *     "help" => "A list of errors"
      * )
+     * @param int Does not care...
      * @return mixed Does not care...
      */
     public function get() {}
