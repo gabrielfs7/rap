@@ -1,9 +1,7 @@
 <?php
 namespace GSoares\EasyJsonDoc\Serializer;
 
-require __DIR__ . '/../../../Sample/User.php';
-require __DIR__ . '/../../../Sample/Status.php';
-require __DIR__ . '/../../../Sample/Group.php';
+require __DIR__ . '/../../../Sample/Dtos.php';
 
 /**
  * PrimitiveValueFiller test case.

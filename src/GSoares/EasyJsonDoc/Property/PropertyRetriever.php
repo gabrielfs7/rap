@@ -1,16 +1,17 @@
 <?php
 namespace GSoares\EasyJsonDoc\Property;
 
-use GSoares\EasyJsonDoc\Parser\CommentLineParser;
 use GSoares\EasyJsonDoc\Exception\TypeNotFoundException;
+use GSoares\EasyJsonDoc\Annotation\AnnotationRetriever;
+use GSoares\EasyJsonDoc\Annotation\Annotation;
 
 class PropertyRetriever
 {
 
     /**
-     * @var CommentLineParser
+     * @var AnnotationRetriever
      */
-    private $lineParser;
+    private $annotationRetriever;
 
     /**
      * @var PropertyFactory
@@ -18,12 +19,12 @@ class PropertyRetriever
     private $propertyFactory;
 
     /**
-     * @param CommentLineParser $lineParser
+     * @param AnnotationRetriever $annotationRetriever
      * @param PropertyFactory $propertyFactory
      */
-    public function __construct(CommentLineParser $lineParser = null, PropertyFactory $propertyFactory = null)
+    public function __construct(AnnotationRetriever $annotationRetriever = null, PropertyFactory $propertyFactory = null)
     {
-        $this->lineParser = $lineParser ?: new CommentLineParser();
+        $this->annotationRetriever = $annotationRetriever ?: new AnnotationRetriever();
         $this->propertyFactory = $propertyFactory ?: new PropertyFactory();
     }
 
@@ -38,17 +39,15 @@ class PropertyRetriever
         $type = null;
         $sample = null;
 
-        foreach ($this->getComment($className, $propertyName) as $commentLine) {
-            $found = $this->lineParser->findType($commentLine);
+        $annotations = $this->annotationRetriever->retrieve($this->getComment($className, $propertyName));
 
-            if ($found) {
-                $type = $found;
+        foreach ($annotations as $annotation) {
+            if ($annotation->name == Annotation::ANNOTATION_VAR) {
+                $type = $annotation->value;
             }
 
-            $found = $this->lineParser->findSample($commentLine);
-
-            if ($found) {
-                $sample = $found;
+            if ($annotation->name == Annotation::ANNOTATION_SAMPLE) {
+                $sample = $annotation->value;
             }
 
             if ($type && $sample) {
@@ -57,6 +56,7 @@ class PropertyRetriever
         }
 
         $propertyDto = $this->propertyFactory->create($propertyName, $type, $sample);
+
 
         if (!$type) {
             throw new TypeNotFoundException(
@@ -75,6 +75,6 @@ class PropertyRetriever
      */
     private function getComment($className, $propertyName)
     {
-        return explode(PHP_EOL, (new \ReflectionClass($className))->getProperty($propertyName)->getDocComment());
+        return (new \ReflectionClass($className))->getProperty($propertyName)->getDocComment();
     }
 }
