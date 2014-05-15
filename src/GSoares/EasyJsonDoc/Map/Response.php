@@ -65,7 +65,4 @@ class Response implements MapInterface
     {
         $this->help = $help;
     }
-
-
-
 }

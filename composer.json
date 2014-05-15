@@ -18,10 +18,12 @@
     },
     "autoload": {
         "psr-4": {
-            "GSoares\\EasyJsonDoc\\": "src/"
+            "GSoares\\EasyJsonDoc\\": "src/",
+            "Sample\\": "test/Sample"
         },
         "psr-0": { 
-            "GSoares\\EasyJsonDoc\\": "src/" 
+            "GSoares\\EasyJsonDoc\\": "src/",
+            "Sample\\": "test/Sample" 
         }
     },
     "config": {

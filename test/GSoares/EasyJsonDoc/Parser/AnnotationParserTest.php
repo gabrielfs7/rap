@@ -1,9 +1,7 @@
 <?php
 namespace GSoares\EasyJsonDoc\Parser;
 
-require __DIR__ . '/../../../Sample/User.php';
-require __DIR__ . '/../../../Sample/Status.php';
-require __DIR__ . '/../../../Sample/Group.php';
+require __DIR__ . '/../../../Sample/Dtos.php';
 require __DIR__ . '/../../../Sample/RestService.php';
 
 /**

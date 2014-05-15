@@ -32,14 +32,14 @@ class JsonSerializer
         PropertyValueSelector $propertyValueSelector = null,
         AnnotationParser $annotationParser = null
     ) {
-        $this->propertyRetriever = $propertyRetriever ?: new PropertyRetriever();
+        //$this->propertyRetriever = $propertyRetriever ?: new PropertyRetriever();
         $this->propertyValueSelector = $propertyValueSelector ?: new PropertyValueSelector();
         $this->annotationParser = $annotationParser ?: new AnnotationParser();
     }
 
     public function serialize($class)
     {
-        return json_encode($this->internalSerialize($class));
+        return $this->internalSerialize($class);
     }
 
     /**
