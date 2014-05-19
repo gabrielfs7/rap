@@ -1,7 +1,7 @@
-easy-json-doc
+RAP!
 =============
 
-"Easy Json Doc" provides a very simple way to generate Json Documentation based on your PHP classes.
+RAP! "Rest API for PHP" provides a very simple way to generate Json Documentation based on your PHP classes and validate your API requests.
 
 ### DTOs with docs
 
