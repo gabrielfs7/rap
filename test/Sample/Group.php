@@ -26,4 +26,15 @@ class Group
      * )
      */
     public $members;
+
+    /**
+     * @var string
+     * @EasyJsonDoc/Property(
+     *     "type" => "Sample\GroupCategory[]",
+     *     "name" => "groupCategory",
+     *     "required" => true,
+     *     "help" => "Group Category"
+     * )
+     */
+    public $groupCategory;
 }

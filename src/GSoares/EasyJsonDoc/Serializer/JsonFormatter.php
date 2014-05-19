@@ -5,14 +5,12 @@ class JsonFormatter
 {
 
     /**
-     * @param mixed $serializedData
+     * @param string $json
      * @return boolean|string
      * @see http://www.php.net/manual/en/function.json-encode.php#80339
      */
-    public static function format($serializedData)
+    public static function format($json)
     {
-        $json = json_encode($serializedData);
-
         $tab = "  ";
         $new_json = "";
         $indent_level = 0;

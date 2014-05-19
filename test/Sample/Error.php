@@ -10,7 +10,7 @@ class Error
      *     "name" => "message",
      *     "required" => true,
      *     "help" => "Error Message",
-     *     "sample" => "Property XXX invalid"
+     *     "sample" => "Property XYZ invalid"
      * )
      */
     public $message;

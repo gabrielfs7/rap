@@ -6,6 +6,8 @@ use GSoares\EasyJsonDoc\Factory\ResourceMappedFactory;
 use GSoares\EasyJsonDoc\Factory\ResponseMappedFactory;
 use GSoares\EasyJsonDoc\Parser\AnnotationInterface as Ai;
 use GSoares\EasyJsonDoc\Factory\PropertyMappedFactory;
+use GSoares\EasyJsonDoc\Map\Response;
+use GSoares\EasyJsonDoc\Map\Param;
 
 class AnnotationParser
 {
@@ -64,7 +66,16 @@ class AnnotationParser
             }
 
             if (strpos($part, Ai::RESPONSE) === 0) {
-                $out[] = $this->responseMappedFactory->create($this->toArray(Ai::RESPONSE, $part));
+                $response = $this->responseMappedFactory->create($this->toArray(Ai::RESPONSE, $part));
+
+                if (!empty($response->getReturn())) {
+                    $param = new Param();
+                    $param->setType($response->getReturn());
+
+                    $response->addParam($param);
+                }
+
+                $out[] = $response;
             }
 
             if (strpos($part, Ai::PARAM) === 0) {

@@ -9,87 +9,155 @@ use GSoares\EasyJsonDoc\Map\Response;
 use GSoares\EasyJsonDoc\Serializer\JsonSerializer;
 use GSoares\EasyJsonDoc\Serializer\JsonFormatter;
 
-$classes = ['Sample\RestService'];
-
+$classesUser = ['Sample\RestService'];
 $parser = new AnnotationParser();
 $serializer = new JsonSerializer();
+$classes = [];
+$i = 0;
 
-echo '<pre>';
+foreach ($classesUser as $class) {
+    $classes[$class] = [];
 
-$out = '';
-
-foreach ($classes as $class) {
-    $reflectionClass = new ReflectionClass($class);
-
-    $out .= '<h1>' . $class . '</h1>';
-
-    foreach ($reflectionClass->getMethods() as $method) {
+    foreach ((new ReflectionClass($class))->getMethods() as $method) {
         if (strstr($method->getDocComment(), AnnotationInterface::RESOURCE)) {
-            $vars = $parser->parse($method->getDocComment());
+            $data = [
+                'resource' => null,
+                'responses' => [],
+                'params' => [],
+            ];
 
-            $resource = null;
-            $responses = [];
-            $params = [];
-
-            foreach ($vars as $var) {
+            foreach ($parser->parse($method->getDocComment()) as $var) {
                 if ($var instanceof Resource) {
-                    $resource = $var;
+                    $data['resource'] = $var;
                 }
 
                 if ($var instanceof Param) {
-                    $params[] = $var;
+                    $data['params'][] = $var;
                 }
 
                 if ($var instanceof Response) {
-                    $responses[] = $var;
+                    $data['responses'][] = $var;
                 }
             }
 
-            $out .= '<h2>URI: ' . $resource->getUri() . ' ' . $resource->getMethod() . '</h2>';
-
-            $out .= '<p>' . $resource->getHelp() . '</p>';
-
-            $out .= '<h3>REQUEST</h3>';
-
-            foreach ($params as $param) {
-                $out .= '<p>' . $param->getHelp() . '</p>';
-                $out .= '<ul>';
-                $out .= '<li>NAME: ' . $param->getName() . '</li>';
-                $out .= '<li>EXAMPLE: ' . $param->getSample() . '</li>';
-                $out .= '<li>TYPE: ' . $param->getType() . '</li>';
-                $out .= '<li>Required: ' . $param->getRequired() . '</li>';
-                $out .= '<li>Default: ' . $param->getDefault() . '</li>';
-                $out .= '</ul>';
-            }
-
-            $out .= '<p>...</p>';
-
-            $out .= '<h3>RESPONSE(s)</h3>';
-
-            foreach ($responses as $response) {
-                $out .= '<p>' . $response->getHelp() . '</p>';
-                $out .= '<ul>';
-                $out .= '<li>STATUS CODE: ' . $response->getStatus() . '</li>';
-
-                $isArray = false;
-
-                if (strstr($response->getReturn(), '[]')) {
-                    $isArray = true;
-                }
-
-                $responseJson = $serializer->serialize(str_replace('[]', '', $response->getReturn()));
-
-                if ($isArray) {
-                    $responseJson = JsonFormatter::format([$responseJson]);
-                } else {
-                    $responseJson = JsonFormatter::format($responseJson);
-                }
-
-                $out .= '<li>RETURN SAMPLE: <br/>' . $responseJson . '</li>';
-                $out .= '</ul>';
-            }
+            $classes[$class][$i++] = $data;
         }
     }
 }
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RAP - Rest API for PHP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+<script src="js/bootstrap.min.js"></script>
+</head>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+<div class="hero-unit" style="padding: 20px 30px">
+    <h1>RAP! </h1>
+    <p>
+        <strong>R</strong>est <strong>A</strong>pi For <strong>P</strong>HP
+    </p>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2 bs-docs-sidebar">
+            <?php foreach ($classes as $class => $methods) { ?>
+            <ul class="nav nav-list bs-docs-sidenav affix">
+                <li>
+                    <strong><?php echo $class; ?></strong>
+                </li>
+                <?php foreach ($methods as $key => $method) { ?>
+                <li>
+                    <a href="#method<?php echo $key; ?>">
+                        (<?php echo $method['resource']->getMethod(); ?>) <?php echo $method['resource']->getUri(); ?>
+                    </a>
+                </li>
+                <?php } ?>
+            </ul>
+            <?php } ?>
+        </div>
+    <div class="span10">
+      <!--Body content-->
+        <?php foreach ($classes as $class => $methods) { ?>
+        <h2><?php echo $class; ?></h2>
+        <br/>
+            <?php foreach ($methods as $key => $method) { ?>
+            <h3 id="method<?php echo $key; ?>">
+                <?php echo $method['resource']->getUri() . ' ' . $method['resource']->getMethod(); ?>
+            </h3>
+            <div class="alert alert-info"><?php echo $method['resource']->getHelp(); ?></div>
+            <h4>
+                REQUEST PARAMETER(S) FOR :
+                <?php echo $method['resource']->getUri() . ' ' . $method['resource']->getMethod(); ?>
+            </h4>
 
-echo $out;
+            <div class="well">
+            <?php
+            $requestExample = [];
+
+            foreach ($method['params'] as $param) {
+                $paramValue = null;
+
+                if ($param->isPrimitive()) {
+                    $paramValue = $serializer->serialize($param);
+                }
+
+                if ($param->isClass()) {
+                    $paramValue = (object) [$param->getName() => $serializer->serialize($param)];
+                }
+
+                $requestExample = array_merge($requestExample, (array) $paramValue);
+                ?>
+                <p><?php echo $param->getHelp(); ?></p>
+                <ul>
+                    <li>NAME: <?php echo $param->getName(); ?></li>
+                    <li>TYPE: <?php echo $param->isClass() ? 'Object' : $param->getType(); ?></li>
+                    <li>REQUIRED: <?php echo ($param->getRequired() ? 'yes' : 'no'); ?></li>
+                    <?php if ($param->getSample()) { ?>
+                    <li>EXAMPLE: <?php echo $param->getSample(); ?></li>
+                    <?php } ?>
+                    <?php if ($param->getDefault()) { ?>
+                    <li>DEFAULT: <?php echo $param->getDefault(); ?></li>
+                    <?php } ?>
+                </ul>
+            <?php } ?>
+            </div>
+
+            <p>Request Example:</p>
+            <pre><?php echo JsonFormatter::format(json_encode((object) $requestExample)); ?></pre>
+
+            <br/>
+            <h4>
+                RESPONSE(S) FOR
+                <?php echo $method['resource']->getUri() . ' ' . $method['resource']->getMethod(); ?>
+            </h4>
+            <?php foreach ($method['responses'] as $response) { ?>
+            <p><?php echo $response->getHelp(); ?></p>
+            <ul>
+                <li>STATUS CODE: <?php echo $response->getStatus(); ?></li>
+                <?php
+                $responseExample = [];
+
+                foreach ($response->getParams() as $param) {
+                    $responseExample = array_merge($responseExample, (array) $serializer->serialize($param));
+                }
+
+                ?>
+                <li>RETURN SAMPLE:</li>
+            </ul>
+            <pre><?php echo JsonFormatter::format(json_encode($responseExample)); ?></pre>
+            <hr/>
+            <?php } ?>
+        <?php } ?>
+    <?php } ?>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -18,6 +18,11 @@ class Response implements MapInterface
      */
     private $help;
 
+    /**
+     * @var Param[]
+     */
+    private $params = [];
+
 	/**
      * @return the $status
      */
@@ -65,4 +70,23 @@ class Response implements MapInterface
     {
         $this->help = $help;
     }
+
+	/**
+     * @return Param[]
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+	/**
+     * @param Param $param
+     */
+    public function addParam(Param $param)
+    {
+        $this->params[] = $param;
+    }
+
+
+
 }

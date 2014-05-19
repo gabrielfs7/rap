@@ -9,10 +9,6 @@ use GSoares\EasyJsonDoc\Map\AbstractParam;
 
 class JsonSerializer
 {
-    /**
-     * @var PropertyRetriever
-     */
-    private $propertyRetriever;
 
     /**
      * @var PropertyValueSelector
@@ -28,37 +24,69 @@ class JsonSerializer
      * @param PropertyRetriever $propertyRetriever
      */
     public function __construct(
-        PropertyRetriever $propertyRetriever = null,
         PropertyValueSelector $propertyValueSelector = null,
         AnnotationParser $annotationParser = null
     ) {
-        //$this->propertyRetriever = $propertyRetriever ?: new PropertyRetriever();
         $this->propertyValueSelector = $propertyValueSelector ?: new PropertyValueSelector();
         $this->annotationParser = $annotationParser ?: new AnnotationParser();
     }
 
-    public function serialize($class)
-    {
-        return $this->internalSerialize($class);
-    }
-
     /**
-     * @param string $class
-     * @return \stdClass
+     * @param AbstractParam $param
+     * @return \stdClass>|\stdClass[]
      */
-    private function internalSerialize($class)
+    public function serialize(AbstractParam $param)
     {
-        $dto = new \stdClass();
+        $obj = new \stdClass();
+        $name = $param->getName();
 
-        foreach ((new \ReflectionClass($class))->getProperties(\ReflectionProperty::IS_PUBLIC) as $prop) {
-            $property = $this->getProperty($prop);
-
-            if ($property) {
-                $this->fillProperty($property, $dto);
+        if ($param->isPrimitive()) {
+            if ($name) {
+                $obj->$name = $this->getDefaultValue($param);
+            } else {
+               $obj = $this->getDefaultValue($param);
             }
         }
 
-        return $dto;
+        if ($param->isClass()) {
+            $class = str_replace('[]', '', $param->getType());
+
+            foreach ((new \ReflectionClass($class))->getProperties(\ReflectionProperty::IS_PUBLIC) as $prop) {
+                $property = $this->getProperty($prop);
+
+                if ($property) {
+                    $this->fillProperty($property, $obj);
+                }
+            }
+        }
+
+        return $obj;
+    }
+
+    /**
+     * @param AbstractParam $property
+     * @param \stdClass $dto
+     * @return mixed
+     */
+    private function fillProperty(AbstractParam $property, \stdClass $dto)
+    {
+        $name = $property->getName();
+
+        if ($property->isArray()) {
+            if ($property->isClass()) {
+                return $dto->$name = [$this->serialize($property)];
+            }
+
+            return $dto->$name = [$this->getDefaultValue($property)];
+        }
+
+        if ($property->isClass()) {
+            return $dto->$name = $this->serialize($property);
+        }
+
+        if ($property->isPrimitive()) {
+            return $dto->$name = $this->getDefaultValue($property);
+        }
     }
 
     /**
@@ -75,36 +103,10 @@ class JsonSerializer
     }
 
     /**
-     * @param Property $property
-     * @param \stdClass $dto
-     * @return mixed
-     */
-    private function fillProperty(Property $property, \stdClass $dto)
-    {
-        $name = $property->getName();
-
-        if ($property->isArray()) {
-            if ($property->isClass()) {
-                return $dto->$name = [$this->internalSerialize(str_replace('[]', '', $property->getType()))];
-            }
-
-            return $dto->$name = $this->getDefaultValue($property);
-        }
-
-        if ($property->isClass()) {
-            return $dto->$name = $this->internalSerialize($property->getType());
-        }
-
-        if ($property->isPrimitive()) {
-            return $dto->$name = $this->getDefaultValue($property);
-        }
-    }
-
-    /**
-     * @param Property $property
+     * @param AbstractParam $property
      * @return string|number|boolean
      */
-    private function getDefaultValue(Property $property)
+    private function getDefaultValue(AbstractParam $property)
     {
         if ($property->getSample()) {
             return $property->getSample();

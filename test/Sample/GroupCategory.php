@@ -1,7 +1,7 @@
 <?php
 namespace Sample;
 
-class Status
+class GroupCategory
 {
     /**
      * @var string
@@ -9,7 +9,7 @@ class Status
      *     "type" => "string",
      *     "name" => "code",
      *     "required" => true,
-     *     "help" => "Status Code",
+     *     "help" => "Group Category Code",
      *     "sample" => "1"
      * )
      */
@@ -21,8 +21,8 @@ class Status
      *     "type" => "string",
      *     "name" => "name",
      *     "required" => true,
-     *     "help" => "Status name",
-     *     "sample" => "Active"
+     *     "help" => "Group Category name",
+     *     "sample" => "Programing"
      * )
      */
     public $name;
