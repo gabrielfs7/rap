@@ -4,12 +4,12 @@ namespace Sample;
 class RestService
 {
     /**
-     * @EasyJsonDoc/Resource(
+     * @RAP/Resource(
      *     "method" => "GET",
      *     "uri" => "api/user/{id}",
      *     "help" => "Resource to get (teste) user"
      * )
-     * @EasyJsonDoc/Param(
+     * @RAP/Param(
      *     "name" => "token",
      *     "type" => "string",
      *     "default" => "Test",
@@ -17,7 +17,7 @@ class RestService
      *     "help" => "The authentication token",
      *     "required" => true
      * )
-     * @EasyJsonDoc/Param(
+     * @RAP/Param(
      *     "name" => "username",
      *     "type" => "string",
      *     "default" => "Test",
@@ -25,22 +25,22 @@ class RestService
      *     "help" => "The user name to search",
      *     "required" => true
      * )
-     * @EasyJsonDoc/Param(
+     * @RAP/Param(
      *     "name" => "registryDate",
      *     "type" => "date",
      *     "help" => "The user registration date"
      * )
-     * @EasyJsonDoc/Response(
+     * @RAP/Response(
      *     "status" => "200",
      *     "return" => "Sample\User[]",
      *     "help" => "Returns the user in case of success"
      * )
-     * @EasyJsonDoc/Response(
+     * @RAP/Response(
      *     "status" => "400",
      *     "return" => "Sample\Error[]",
      *     "help" => "A list of errors if request fail"
      * )
-     * @EasyJsonDoc/Response(
+     * @RAP/Response(
      *     "status" => "500",
      *     "return" => "string",
      *     "help" => "Internal server error"
@@ -51,12 +51,12 @@ class RestService
     public function get() {}
 
     /**
-     * @EasyJsonDoc/Resource(
+     * @RAP/Resource(
      *     "method" => "PUT",
      *     "uri" => "api/user/{id}",
      *     "help" => "Resource to update user"
      * )
-     * @EasyJsonDoc/Param(
+     * @RAP/Param(
      *     "name" => "token",
      *     "type" => "string",
      *     "default" => "Test",
@@ -64,18 +64,18 @@ class RestService
      *     "help" => "The authentication token",
      *     "required" => true
      * )
-     * @EasyJsonDoc/Param(
+     * @RAP/Param(
      *     "name" => "user",
      *     "type" => "Sample\User",
      *     "help" => "The user to update",
      *     "required" => true
      * )
-     * @EasyJsonDoc/Response(
+     * @RAP/Response(
      *     "status" => "200",
      *     "return" => "Sample\User[]",
      *     "help" => "Returns the user in case of success"
      * )
-     * @EasyJsonDoc/Response(
+     * @RAP/Response(
      *     "status" => "400",
      *     "return" => "Sample\Error[]",
      *     "help" => "A list of errors if request fail"
@@ -86,12 +86,12 @@ class RestService
     public function put() {}
 
     /**
-     * @EasyJsonDoc/Resource(
+     * @RAP/Resource(
      *     "method" => "POST",
      *     "uri" => "api/user",
      *     "help" => "Resource to create user"
      * )
-     * @EasyJsonDoc/Param(
+     * @RAP/Param(
      *     "name" => "token",
      *     "type" => "string",
      *     "default" => "Test",
@@ -99,18 +99,18 @@ class RestService
      *     "help" => "The authentication token",
      *     "required" => true
      * )
-     * @EasyJsonDoc/Param(
+     * @RAP/Param(
      *     "name" => "user",
      *     "type" => "Sample\User",
      *     "help" => "The user to update",
      *     "required" => true
      * )
-     * @EasyJsonDoc/Response(
+     * @RAP/Response(
      *     "status" => "200",
      *     "return" => "Sample\User[]",
      *     "help" => "Returns the user created"
      * )
-     * @EasyJsonDoc/Response(
+     * @RAP/Response(
      *     "status" => "400",
      *     "return" => "Sample\Error[]",
      *     "help" => "A list of errors if request fail"

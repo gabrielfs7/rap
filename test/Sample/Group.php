@@ -5,7 +5,7 @@ class Group
 {
     /**
      * @var string
-     * @EasyJsonDoc/Property(
+     * @RAP/Property(
      *     "type" => "string",
      *     "name" => "name",
      *     "required" => true,
@@ -17,7 +17,7 @@ class Group
 
     /**
      * @var string
-     * @EasyJsonDoc/Property(
+     * @RAP/Property(
      *     "type" => "integer",
      *     "name" => "members",
      *     "required" => true,
@@ -29,7 +29,7 @@ class Group
 
     /**
      * @var string
-     * @EasyJsonDoc/Property(
+     * @RAP/Property(
      *     "type" => "Sample\GroupCategory[]",
      *     "name" => "groupCategory",
      *     "required" => true,

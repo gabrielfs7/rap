@@ -5,7 +5,7 @@ class User
 {
     /**
      * @var string
-     * @EasyJsonDoc/Property(
+     * @RAP/Property(
      *     "type" => "string",
      *     "name" => "name",
      *     "required" => true,
@@ -17,7 +17,7 @@ class User
 
     /**
      * @var string
-     * @EasyJsonDoc/Property(
+     * @RAP/Property(
      *     "type" => "integer",
      *     "name" => "age",
      *     "required" => true,
@@ -29,7 +29,7 @@ class User
 
     /**
      * @var string
-     * @EasyJsonDoc/Property(
+     * @RAP/Property(
      *     "type" => "date",
      *     "name" => "birthDate",
      *     "required" => true,
@@ -41,7 +41,7 @@ class User
 
     /**
      * @var string
-     * @EasyJsonDoc/Property(
+     * @RAP/Property(
      *     "type" => "Sample\Status",
      *     "name" => "status",
      *     "required" => true,
@@ -52,7 +52,7 @@ class User
 
     /**
      * @var string
-     * @EasyJsonDoc/Property(
+     * @RAP/Property(
      *     "type" => "Sample\Group[]",
      *     "name" => "groups",
      *     "required" => true,

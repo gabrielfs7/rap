@@ -18,11 +18,11 @@
     },
     "autoload": {
         "psr-4": {
-            "GSoares\\EasyJsonDoc\\": "src/",
+            "GSoares\\RAP\\": "src/",
             "Sample\\": "test/Sample"
         },
         "psr-0": { 
-            "GSoares\\EasyJsonDoc\\": "src/",
+            "GSoares\\RAP\\": "src/",
             "Sample\\": "test/Sample" 
         }
     },

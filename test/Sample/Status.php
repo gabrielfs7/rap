@@ -5,7 +5,7 @@ class Status
 {
     /**
      * @var string
-     * @EasyJsonDoc/Property(
+     * @RAP/Property(
      *     "type" => "string",
      *     "name" => "code",
      *     "required" => true,
@@ -17,7 +17,7 @@ class Status
 
     /**
      * @var string
-     * @EasyJsonDoc/Property(
+     * @RAP/Property(
      *     "type" => "string",
      *     "name" => "name",
      *     "required" => true,

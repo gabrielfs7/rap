@@ -1,13 +1,13 @@
 <?php
 include __DIR__ . '/../vendor/autoload.php';
 
-use GSoares\EasyJsonDoc\Parser\AnnotationParser;
-use GSoares\EasyJsonDoc\Parser\AnnotationInterface;
-use GSoares\EasyJsonDoc\Map\Resource;
-use GSoares\EasyJsonDoc\Map\Param;
-use GSoares\EasyJsonDoc\Map\Response;
-use GSoares\EasyJsonDoc\Serializer\JsonSerializer;
-use GSoares\EasyJsonDoc\Serializer\JsonFormatter;
+use GSoares\RAP\Parser\AnnotationParser;
+use GSoares\RAP\Parser\AnnotationInterface;
+use GSoares\RAP\Map\Resource;
+use GSoares\RAP\Map\Param;
+use GSoares\RAP\Map\Response;
+use GSoares\RAP\Serializer\JsonSerializer;
+use GSoares\RAP\Serializer\JsonFormatter;
 
 $classesUser = ['Sample\RestService'];
 $parser = new AnnotationParser();

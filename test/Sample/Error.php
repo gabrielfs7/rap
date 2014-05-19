@@ -5,7 +5,7 @@ class Error
 {
     /**
      * @var string
-     * @EasyJsonDoc/Property(
+     * @RAP/Property(
      *     "type" => "string",
      *     "name" => "message",
      *     "required" => true,

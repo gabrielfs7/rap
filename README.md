@@ -15,13 +15,13 @@ class User
 {
     /**
      * @var string
-     * @EasyJsonDoc\Sample John Smith
+     * @RAP\Sample John Smith
      */
     public $name;
 
     /**
      * @var int
-     * @EasyJsonDoc\Sample 33
+     * @RAP\Sample 33
      */
     public $age;
 
@@ -45,7 +45,7 @@ class Status
 {
     /**
      * @var string
-     * @EasyJsonDoc\Sample Active
+     * @RAP\Sample Active
      */
     public $name;
 }
@@ -54,7 +54,7 @@ class Group
 {
     /**
      * @var string
-     * @EasyJsonDoc\Sample PHP Fans
+     * @RAP\Sample PHP Fans
      */
     public $name;
 
@@ -64,7 +64,7 @@ class Group
     public $members;
 }
 
-$documentor = new \GSaores\EasyJsonDoc\Serializer\JsonSerializer();
+$documentor = new \GSaores\RAP\Serializer\JsonSerializer();
 echo $documentor->serialize('Sample\User');
 ?>
 ```
