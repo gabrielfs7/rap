@@ -65,9 +65,9 @@ foreach (Documentor::getClasses() as $class) {
 </div>
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span2 bs-docs-sidebar">
-            <?php foreach ($classes as $class => $methods) { ?>
+        <div class="span4 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav affix">
+            <?php foreach ($classes as $class => $methods) { ?>
                 <li>
                     <strong><?php echo $class; ?></strong>
                 </li>
@@ -78,10 +78,10 @@ foreach (Documentor::getClasses() as $class) {
                     </a>
                 </li>
                 <?php } ?>
-            </ul>
             <?php } ?>
+            </ul>
         </div>
-    <div class="span10">
+    <div class="span8">
       <!--Body content-->
         <?php foreach ($classes as $class => $methods) { ?>
         <h2><?php echo $class; ?></h2>
