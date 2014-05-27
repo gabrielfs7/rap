@@ -13,8 +13,8 @@ $serializer = new JsonSerializer();
 $classes = [];
 $i = 0;
 
-foreach (Documentor::getClasses() as $class) {
-    $classes[$class] = [];
+foreach (Documentor::getClasses() as $class => $presentation) {
+    $classes[$presentation] = [];
 
     foreach ((new ReflectionClass($class))->getMethods() as $method) {
         if (strstr($method->getDocComment(), AnnotationInterface::RESOURCE)) {
@@ -38,7 +38,7 @@ foreach (Documentor::getClasses() as $class) {
                 }
             }
 
-            $classes[$class][$i++] = $data;
+            $classes[$presentation][$i++] = $data;
         }
     }
 }
@@ -66,7 +66,7 @@ foreach (Documentor::getClasses() as $class) {
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span4 bs-docs-sidebar">
-            <ul class="nav nav-list bs-docs-sidenav affix">
+            <ul class="nav nav-list bs-docs-sidenav">
             <?php foreach ($classes as $class => $methods) { ?>
                 <li>
                     <strong><?php echo $class; ?></strong>
@@ -80,7 +80,7 @@ foreach (Documentor::getClasses() as $class) {
                 <?php } ?>
             <?php } ?>
             </ul>
-        </div>
+    </div>
     <div class="span8">
       <!--Body content-->
         <?php foreach ($classes as $class => $methods) { ?>
@@ -88,18 +88,22 @@ foreach (Documentor::getClasses() as $class) {
         <br/>
             <?php foreach ($methods as $key => $method) { ?>
             <h3 id="method<?php echo $key; ?>">
-                <?php echo $method['resource']->getUri() . ' ' . $method['resource']->getMethod(); ?>
+                <?php echo $method['resource']->getMethod() . ' ' . $method['resource']->getUri(); ?>
             </h3>
             <div class="alert alert-info"><?php echo $method['resource']->getHelp(); ?></div>
-            <h4>
-                REQUEST PARAMETER(S) FOR :
-                <?php echo $method['resource']->getUri() . ' ' . $method['resource']->getMethod(); ?>
-            </h4>
 
-            <div class="well">
             <?php
             $requestExample = [];
+            $queryString = [];
+            ?>
 
+            <?php if (count($method['params'])) { ?>
+            <h4>
+                REQUEST PARAMETER(S) FOR :
+                <?php echo $method['resource']->getMethod() . ' ' . $method['resource']->getUri(); ?>
+            </h4>
+            <div class="well">
+            <?php
             foreach ($method['params'] as $param) {
                 $paramValue = null;
 
@@ -111,7 +115,11 @@ foreach (Documentor::getClasses() as $class) {
                     $paramValue = (object) [$param->getName() => $serializer->serialize($param)];
                 }
 
-                $requestExample = array_merge($requestExample, (array) $paramValue);
+                if ($method['resource']->getMethod() !== 'GET') {
+                    $requestExample = array_merge($requestExample, (array) $paramValue);
+                } else {
+                    $queryString[$param->getName()] = $paramValue;
+                }
                 ?>
                 <p><?php echo $param->getHelp(); ?></p>
                 <ul>
@@ -127,9 +135,18 @@ foreach (Documentor::getClasses() as $class) {
                 </ul>
             <?php } ?>
             </div>
+            <?php } ?>
 
             <p>Request Example:</p>
-            <pre><?php echo JsonFormatter::format(json_encode((object) $requestExample)); ?></pre>
+            <pre>
+            <?php echo $method['resource']->getMethod() . ' ' . $method['resource']->getUri() . (count($queryString) ? ('?' . http_build_query($queryString)) : '') ; ?> HTTP/1.1
+            Host: <?php echo Documentor::getHost(); ?>
+            <?php
+            if ($method['resource']->getMethod() !== 'GET' && $requestExample) {
+                echo '<br/>' . JsonFormatter::format(json_encode((object) $requestExample));
+            }
+            ?>
+            </pre>
 
             <br/>
             <h4>

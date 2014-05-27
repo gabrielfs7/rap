@@ -160,6 +160,8 @@ abstract class AbstractParam implements MapInterface
      */
     public function isClass()
     {
-        return class_exists(str_replace('[]', '', $this->type));
+        $type = str_replace('[]', '', $this->type);
+
+        return $type !== self::DATETIME && class_exists($type);
     }
 }

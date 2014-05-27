@@ -1,6 +1,7 @@
 <?php
 namespace GSoares\RAP\Property;
 
+use GSoares\RAP\Map\AbstractParam;
 class PropertyFactory
 {
 
@@ -25,7 +26,7 @@ class PropertyFactory
             $property->isPrimitive = true;
         }
 
-        if (class_exists($property->type)) {
+        if ($property->type !== AbstractParam::DATETIME && class_exists($property->type)) {
             $property->isClass = true;
         }
 

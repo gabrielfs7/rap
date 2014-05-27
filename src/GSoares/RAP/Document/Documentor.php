@@ -23,9 +23,15 @@ class Documentor
         self::JQUERY_URL => 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'
     ];
 
-    public static function addClass($class)
+    /**
+     * @param string $class
+     * @param string $presentation
+     */
+    public static function addClass($class, $presentation)
     {
-        self::$classes[] = $class;
+        self::$classes[$class] = $presentation;
+
+        asort(self::$classes);
     }
 
     /**
@@ -58,6 +64,11 @@ class Documentor
     public static function getConfig($configIndex)
     {
         return isset(self::$config[$configIndex]) ? self::$config[$configIndex] : null;
+    }
+
+    public static function getHost()
+    {
+        return $_SERVER['HTTP_HOST'];
     }
 
     /**
