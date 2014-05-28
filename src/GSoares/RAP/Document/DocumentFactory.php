@@ -125,7 +125,7 @@ class DocumentFactory
 
         $q = $resource->getMethod() == 'GET' && count($sample) ? http_build_query($sample) : null;
 
-        $out = $resource->getMethod() . ($q ? ('?' . $q) : null ) . ' HTTP HTTP/1.1';
+        $out = $resource->getMethod() . ' ' . $resource->getUri() . ($q ? ('?' . $q) : null ) . ' HTTP/1.1';
         $out.= PHP_EOL . 'Host: ' . Documentor::getHost();
 
         if (count($sample) && $resource->getMethod() !== 'GET') {

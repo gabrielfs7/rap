@@ -77,6 +77,9 @@ class Documentor
     public static function document()
     {
         ob_start();
+        $document = new DocumentFactory();
+        $classesDoc = $document->create(self::$classes);
+
         include realpath(__DIR__ . '/../../../../template/apidoc.php');
         return ob_get_clean();
     }
