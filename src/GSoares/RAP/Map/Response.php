@@ -23,6 +23,11 @@ class Response implements MapInterface
      */
     private $params = [];
 
+    /**
+     * @var mixed
+     */
+    private $sample;
+
 	/**
      * @return the $status
      */
@@ -87,6 +92,19 @@ class Response implements MapInterface
         $this->params[] = $param;
     }
 
+	/**
+     * @return mixed $sample
+     */
+    public function getSample()
+    {
+        return $this->sample;
+    }
 
-
+	/**
+     * @param mixed $sample
+     */
+    public function setSample($sample)
+    {
+        $this->sample = $sample;
+    }
 }

@@ -18,6 +18,21 @@ class Resource implements MapInterface
      */
     private $method;
 
+    /**
+     * @var mixed
+     */
+    private $sample;
+
+    /**
+     * @var Response[]
+     */
+    private $responses;
+
+    /**
+     * @var Param[]
+     */
+    private $params;
+
 	/**
      * @return string
      */
@@ -64,5 +79,69 @@ class Resource implements MapInterface
     public function setMethod($method)
     {
         $this->method = $method;
+    }
+
+    /**
+     * @return Param[]
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @return Param[] $params
+     */
+    public function setParams(array $params)
+    {
+        $this->params = $params;
+    }
+
+    /**
+     * @param Param $param
+     */
+    public function addParam(Param $param)
+    {
+        $this->params[] = $param;
+    }
+
+    /**
+     * @return Response[]
+     */
+    public function getResponses()
+    {
+        return $this->responses;
+    }
+
+    /**
+     * @param Response $response
+     */
+    public function addResponse(Response $response)
+    {
+        $this->responses[] = $response;
+    }
+
+    /**
+     * @param Response[] $responses
+     */
+    public function setResponses(array $responses)
+    {
+        $this->responses = $responses;
+    }
+
+	/**
+     * @return the $sample
+     */
+    public function getSample()
+    {
+        return $this->sample;
+    }
+
+	/**
+     * @param mixed $sample
+     */
+    public function setSample($sample)
+    {
+        $this->sample = $sample;
     }
 }
