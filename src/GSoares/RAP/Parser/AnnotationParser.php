@@ -68,12 +68,15 @@ class AnnotationParser
             if (strpos($part, Ai::RESPONSE) === 0) {
                 $response = $this->responseMappedFactory->create($this->toArray(Ai::RESPONSE, $part));
 
-                if (!empty($response->getReturn())) {
-                    $param = new Param();
-                    $param->setType($response->getReturn());
+                //FIXME
+//                 if (!empty($response->getReturn())) {
+//                     $param = new Param();
+//                     $param->setType(str_replace('[]', '', $response->getReturn()));
+//                     $param->setIsArray(strpos($response->getReturn(), '[]') !== false);
 
-                    $response->addParam($param);
-                }
+//                     $response->addParam($param);
+//                 }
+                //FIXME
 
                 $out[] = $response;
             }

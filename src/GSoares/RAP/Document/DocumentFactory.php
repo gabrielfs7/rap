@@ -10,7 +10,9 @@ use GSoares\RAP\Map\Response;
 use GSoares\RAP\Serializer\JsonFormatter;
 use GSoares\RAP\Map\ResourceDocument;
 
-
+/**
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 class DocumentFactory
 {
 
@@ -88,13 +90,7 @@ class DocumentFactory
      */
     private function createResponse(Response $response)
     {
-        $sample = [];
-
-        foreach ($response->getParams() as $param) {
-            $sample = array_merge($sample, (array) $this->serializer->serialize($param));
-        }
-
-        return JsonFormatter::format(json_encode($sample));
+        return JsonFormatter::format(json_encode($this->serializer->serialize(current($response->getParams()))));
     }
 
     /**

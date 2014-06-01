@@ -1,7 +1,7 @@
 <?php
 namespace GSoares\RAP\Property;
 
-use GSoares\RAP\Exception\TypeNotFoundException;
+use GSoares\RAP\Exception\InvalidTypeException;
 use GSoares\RAP\Annotation\AnnotationRetriever;
 use GSoares\RAP\Annotation\Annotation;
 
@@ -59,7 +59,7 @@ class PropertyRetriever
 
 
         if (!$type) {
-            throw new TypeNotFoundException(
+            throw new InvalidTypeException(
                 'Property ' . $propertyName . ' of class ' . $className .
                  ' has no type. Please use the @var annotation at property PHPDoc'
             );

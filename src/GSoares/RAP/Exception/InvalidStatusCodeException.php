@@ -4,7 +4,7 @@ namespace GSoares\RAP\Exception;
 /**
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
-class InvalidConfigurationException extends RAPException
+class InvalidStatusCodeException extends RAPException
 {
-    const CODE = 2;
+    const CODE = 4;
 }

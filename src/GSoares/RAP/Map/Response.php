@@ -1,6 +1,8 @@
 <?php
 namespace GSoares\RAP\Map;
 
+
+use GSoares\RAP\Exception\InvalidStatusCodeException;
 class Response implements MapInterface
 {
     /**
@@ -29,7 +31,7 @@ class Response implements MapInterface
     private $sample;
 
 	/**
-     * @return the $status
+     * @return int
      */
     public function getStatus()
     {
@@ -41,6 +43,10 @@ class Response implements MapInterface
      */
     public function setStatus($status)
     {
+        if (!in_array($status, array_keys(HttpResponseStatus::$statusTexts))) {
+            throw new InvalidStatusCodeException($status);
+        }
+
         $this->status = $status;
     }
 

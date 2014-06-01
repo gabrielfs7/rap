@@ -1,6 +1,10 @@
 <?php
 namespace GSoares\RAP\Map;
 
+use GSoares\RAP\Exception\InvalidTypeException;
+/**
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 abstract class AbstractParam implements MapInterface
 {
     const STRING = 'string';
@@ -40,6 +44,21 @@ abstract class AbstractParam implements MapInterface
      */
     private $default;
 
+    /**
+     * @var boolean
+     */
+    private $isArray;
+
+    /**
+     * @var boolean
+     */
+    private $isClass;
+
+    /**
+     * @var boolean
+     */
+    private $isPrimitive;
+
 	/**
      * @return the $name
      */
@@ -69,6 +88,21 @@ abstract class AbstractParam implements MapInterface
      */
     public function setType($type)
     {
+        $this->isArray = strpos($type, '[]') !== false;
+
+        $type = str_replace('[]', '', $type);
+
+        $this->isPrimitive = in_array(
+            $type,
+            [self::STRING, self::INTEGER, self::DATE, self::DATETIME, self::BOOLEAN, self::FLOAT]
+        );
+
+        $this->isClass = $type !== self::DATETIME && class_exists($type);
+
+        if (!$this->isClass() && !$this->isPrimitive()) {
+            throw new InvalidTypeException('Type "' . $type . '" not found');
+        }
+
         $this->type = $type;
     }
 
@@ -141,7 +175,7 @@ abstract class AbstractParam implements MapInterface
      */
     public function isArray()
     {
-        return strpos($this->type, '[]') !== false;
+        return $this->isArray;
     }
 
     /**
@@ -149,10 +183,7 @@ abstract class AbstractParam implements MapInterface
      */
     public function isPrimitive()
     {
-        return in_array(
-            str_replace('[]', '', $this->type),
-            [self::STRING, self::INTEGER, self::DATE, self::DATETIME, self::BOOLEAN, self::FLOAT]
-        );
+        return $this->isPrimitive;
     }
 
     /**
@@ -160,8 +191,6 @@ abstract class AbstractParam implements MapInterface
      */
     public function isClass()
     {
-        $type = str_replace('[]', '', $this->type);
-
-        return $type !== self::DATETIME && class_exists($type);
+        return $this->isClass;
     }
 }

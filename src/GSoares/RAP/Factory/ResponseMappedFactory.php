@@ -3,8 +3,11 @@ namespace GSoares\RAP\Factory;
 
 use GSoares\RAP\Map\Response;
 use GSoares\RAP\Exception\InvalidConfigurationException;
+use GSoares\RAP\Map\Param;
 
-
+/**
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 class ResponseMappedFactory
 {
 
@@ -27,6 +30,14 @@ class ResponseMappedFactory
 
         $response->setReturn($data['return']);
         $response->setStatus($data['status']);
+
+
+        if (!empty($response->getReturn())) {
+            $param = new Param();
+            $param->setType($response->getReturn());
+
+            $response->addParam($param);
+        }
 
         return $response;
     }

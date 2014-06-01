@@ -38,11 +38,10 @@ class JsonSerializer
     public function serialize(AbstractParam $param)
     {
         $obj = new \stdClass();
-        $name = $param->getName();
 
         if ($param->isPrimitive()) {
-            if ($name) {
-                $obj->$name = $this->getDefaultValue($param);
+            if ($param->getName()) {
+                $obj->{$param->getName()} = $this->getDefaultValue($param);
             } else {
                $obj = $this->getDefaultValue($param);
             }
@@ -60,7 +59,7 @@ class JsonSerializer
             }
         }
 
-        return $obj;
+        return $param->isArray() ? [$obj] : $obj;
     }
 
     /**
@@ -70,22 +69,12 @@ class JsonSerializer
      */
     private function fillProperty(AbstractParam $property, \stdClass $dto)
     {
-        $name = $property->getName();
-
-        if ($property->isArray()) {
-            if ($property->isClass()) {
-                return $dto->$name = [$this->serialize($property)];
-            }
-
-            return $dto->$name = [$this->getDefaultValue($property)];
-        }
-
         if ($property->isClass()) {
-            return $dto->$name = $this->serialize($property);
+            return $dto->{$property->getName()} = $this->serialize($property);
         }
 
         if ($property->isPrimitive()) {
-            return $dto->$name = $this->getDefaultValue($property);
+            return $dto->{$property->getName()} = $this->getDefaultValue($property);
         }
     }
 
