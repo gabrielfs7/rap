@@ -4,7 +4,9 @@ namespace GSoares\RAP\Factory;
 use GSoares\RAP\Map\Resource;
 use GSoares\RAP\Exception\InvalidConfigurationException;
 
-
+/**
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 class ResourceMappedFactory
 {
 

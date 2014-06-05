@@ -1,33 +1,22 @@
 <?php
 namespace GSoares\RAP\Serializer;
 
-use GSoares\RAP\Property\PropertyRetriever;
-use GSoares\RAP\Property\PropertyValueSelector;
 use GSoares\RAP\Map\Property;
 use GSoares\RAP\Parser\AnnotationParser;
 use GSoares\RAP\Map\AbstractParam;
 
 class JsonSerializer
 {
-
-    /**
-     * @var PropertyValueSelector
-     */
-    private $propertyValueSelector;
-
     /**
      * @var AnnotationParser
      */
     private $annotationParser;
 
     /**
-     * @param PropertyRetriever $propertyRetriever
+     * @param AnnotationParser $annotationParser
      */
-    public function __construct(
-        PropertyValueSelector $propertyValueSelector = null,
-        AnnotationParser $annotationParser = null
-    ) {
-        $this->propertyValueSelector = $propertyValueSelector ?: new PropertyValueSelector();
+    public function __construct(AnnotationParser $annotationParser = null)
+    {
         $this->annotationParser = $annotationParser ?: new AnnotationParser();
     }
 

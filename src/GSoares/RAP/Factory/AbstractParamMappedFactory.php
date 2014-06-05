@@ -4,6 +4,9 @@ namespace GSoares\RAP\Factory;
 use GSoares\RAP\Exception\InvalidConfigurationException;
 use GSoares\RAP\Map\AbstractParam;
 
+/**
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 abstract class AbstractParamMappedFactory
 {
 

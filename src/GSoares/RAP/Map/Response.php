@@ -1,8 +1,11 @@
 <?php
 namespace GSoares\RAP\Map;
 
-
 use GSoares\RAP\Exception\InvalidStatusCodeException;
+
+/**
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 class Response implements MapInterface
 {
     /**
