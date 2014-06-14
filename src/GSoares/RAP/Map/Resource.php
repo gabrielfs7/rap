@@ -3,6 +3,7 @@ namespace GSoares\RAP\Map;
 
 class Resource implements MapInterface
 {
+
     /**
      * @var string
      */

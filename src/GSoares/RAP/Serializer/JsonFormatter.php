@@ -1,6 +1,11 @@
 <?php
 namespace GSoares\RAP\Serializer;
 
+/**
+ * Class JsonFormatter
+ *
+ * @package GSoares\RAP\Serializer
+ */
 class JsonFormatter
 {
 

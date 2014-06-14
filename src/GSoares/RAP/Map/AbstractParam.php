@@ -83,8 +83,9 @@ abstract class AbstractParam implements MapInterface
         return $this->type;
     }
 
-	/**
-     * @param string $type
+    /**
+     * @param $type
+     * @throws \GSoares\RAP\Exception\InvalidTypeException
      */
     public function setType($type)
     {
@@ -141,7 +142,7 @@ abstract class AbstractParam implements MapInterface
 	/**
      * @return the $required
      */
-    public function getRequired()
+    public function isRequired()
     {
         return $this->required;
     }

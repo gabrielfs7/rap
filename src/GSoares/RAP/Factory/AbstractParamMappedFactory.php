@@ -5,6 +5,9 @@ use GSoares\RAP\Exception\InvalidConfigurationException;
 use GSoares\RAP\Map\AbstractParam;
 
 /**
+ * Class AbstractParamMappedFactory
+ *
+ * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 abstract class AbstractParamMappedFactory
@@ -12,12 +15,14 @@ abstract class AbstractParamMappedFactory
 
     /**
      * @param array $data
-     * @return \GSoares\RAP\Map\Param
+     * @param AbstractParam $param
+     * @return AbstractParam
+     * @throws \GSoares\RAP\Exception\InvalidConfigurationException
      */
     public function createByParam(array $data, AbstractParam $param)
     {
         $param->setHelp(isset($data['help']) ? $data['help'] : null);
-        $param->setRequired(isset($data['required']) ? boolval($data['required']) : true);
+        $param->setRequired(isset($data['required']) ? boolval($data['required']) : false);
         $param->setSample(isset($data['sample']) ? $data['sample'] : null);
         $param->setDefault(isset($data['default']) ? $data['default'] : null);
 

@@ -1,6 +1,7 @@
 <?php
 namespace GSoares\RAP\Map;
 
+
 class ResourceDocument implements MapInterface
 {
     /**
@@ -79,8 +80,8 @@ class ResourceDocument implements MapInterface
         return $this->resources;
     }
 
-	/**
-     * @param Resource $resources
+    /**
+     * @param \GSoares\RAP\Map\Resource|Resource $resource
      */
     public function addResource(Resource $resource)
     {

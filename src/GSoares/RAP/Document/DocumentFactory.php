@@ -3,6 +3,7 @@ namespace GSoares\RAP\Document;
 
 use GSoares\RAP\Parser\AnnotationInterface;
 use GSoares\RAP\Parser\AnnotationParser;
+use GSoares\RAP\Parser\AnnotationParserInterface;
 use GSoares\RAP\Serializer\JsonSerializer;
 use GSoares\RAP\Map\Resource;
 use GSoares\RAP\Map\Param;
@@ -17,7 +18,7 @@ class DocumentFactory
 {
 
     /**
-     * @var \GSoares\RAP\Parser\AnnotationParser
+     * @var \GSoares\RAP\Parser\AnnotationParserInterface
      */
     private $parser;
 
@@ -27,10 +28,10 @@ class DocumentFactory
     private $serializer;
 
     /**
-     * @param AnnotationParser $parser
+     * @param AnnotationParserInterface $parser
      * @param JsonSerializer $serializer
      */
-    public function __construct(AnnotationParser $parser = null, JsonSerializer $serializer = null)
+    public function __construct(AnnotationParserInterface $parser = null, JsonSerializer $serializer = null)
     {
         $this->parser = $parser ?: new AnnotationParser();
         $this->serializer = $this->serializer ?: new JsonSerializer();
@@ -112,17 +113,24 @@ class DocumentFactory
                 $paramValue = (object) [$param->getName() => $this->serializer->serialize($param)];
             }
 
-            if ($resource->getMethod() !== 'GET') {
-                $sample = array_merge($sample, (array) $paramValue);
-            } else {
-                $sample[$param->getName()] = $paramValue;
-            }
+            $sample = array_merge($sample, (array) $paramValue);
         }
 
+        return $this->createHeader($resource, $sample);
+    }
+
+    /**
+     * @param Resource $resource
+     * @param array $sample
+     * @return string
+     */
+    private function createHeader(Resource $resource, array $sample)
+    {
         $q = $resource->getMethod() == 'GET' && count($sample) ? http_build_query($sample) : null;
 
         $out = $resource->getMethod() . ' ' . $resource->getUri() . ($q ? ('?' . $q) : null ) . ' HTTP/1.1';
         $out.= PHP_EOL . 'Host: ' . Documentor::getHost();
+        $out.= PHP_EOL . 'Content-Type: application/json';
 
         if (count($sample) && $resource->getMethod() !== 'GET') {
             $out .= PHP_EOL . JsonFormatter::format(json_encode($sample));

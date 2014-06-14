@@ -6,10 +6,13 @@ use GSoares\RAP\Factory\ResourceMappedFactory;
 use GSoares\RAP\Factory\ResponseMappedFactory;
 use GSoares\RAP\Parser\AnnotationInterface as Ai;
 use GSoares\RAP\Factory\PropertyMappedFactory;
-use GSoares\RAP\Map\Response;
-use GSoares\RAP\Map\Param;
 
-class AnnotationParser
+/**
+ * Class AnnotationParser
+ *
+ * @package GSoares\RAP\Parser
+ */
+class AnnotationParser implements AnnotationParserInterface
 {
 
     /**
@@ -52,7 +55,7 @@ class AnnotationParser
 
     /**
      * @param string $docComment
-     * @return GSoares\RAP\Map\MapInterface[]
+     * @return \GSoares\RAP\Map\MapInterface[]
      */
     public function parse($docComment)
     {

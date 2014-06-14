@@ -58,7 +58,7 @@
                 <ul>
                     <li>NAME: <?php echo $param->getName(); ?></li>
                     <li>TYPE: <?php echo $param->isClass() ? 'Object' : $param->getType(); ?></li>
-                    <li>REQUIRED: <?php echo ($param->getRequired() ? 'yes' : 'no'); ?></li>
+                    <li>REQUIRED: <?php echo ($param->isRequired() ? 'yes' : 'no'); ?></li>
                     <?php if ($param->getSample()) { ?>
                     <li>EXAMPLE: <?php echo $param->getSample(); ?></li>
                     <?php } ?>

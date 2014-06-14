@@ -5,14 +5,18 @@ use GSoares\RAP\Map\Resource;
 use GSoares\RAP\Exception\InvalidConfigurationException;
 
 /**
+ * Class ResourceMappedFactory
+ *
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ * @package GSoares\RAP\Factory
  */
 class ResourceMappedFactory
 {
 
     /**
      * @param array $data
-     * @return \GSoares\RAP\Map\Resource
+     * @return Resource
+     * @throws \GSoares\RAP\Exception\InvalidConfigurationException
      */
     public function create(array $data)
     {
@@ -28,7 +32,7 @@ class ResourceMappedFactory
         }
 
         $resource->setUri($data['uri']);
-        $resource->setMethod($data['method']);
+        $resource->setMethod(strtoupper($data['method']));
 
         return $resource;
     }

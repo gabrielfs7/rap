@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "ea3bd659f140eb9598a97c560202215b",
+    "hash": "0a64dd43cad67faf15f1a7f406cfec04",
     "packages": [
 
     ],
@@ -412,16 +413,16 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.0.5",
+            "version": "2.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "3697daa12ab57b2bfc27b734ab963142f27b9159"
+                "reference": "a01285d0b705af5963367451088508b6d4e417f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/3697daa12ab57b2bfc27b734ab963142f27b9159",
-                "reference": "3697daa12ab57b2bfc27b734ab963142f27b9159",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/a01285d0b705af5963367451088508b6d4e417f2",
+                "reference": "a01285d0b705af5963367451088508b6d4e417f2",
                 "shasum": ""
             },
             "require": {
@@ -465,7 +466,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2014-04-16 14:50:10"
+            "time": "2014-06-07 16:22:54"
         },
         {
             "name": "sebastian/diff",
@@ -903,6 +904,61 @@
             "time": "2014-04-16 10:36:21"
         },
         {
+            "name": "symfony/http-foundation",
+            "version": "dev-master",
+            "target-dir": "Symfony/Component/HttpFoundation",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/HttpFoundation.git",
+                "reference": "d17938f07e168c4e5bb35c209d3c289ccff15d80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/d17938f07e168c4e5bb35c209d3c289ccff15d80",
+                "reference": "d17938f07e168c4e5bb35c209d3c289ccff15d80",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/expression-language": "~2.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\HttpFoundation\\": ""
+                },
+                "classmap": [
+                    "Symfony/Component/HttpFoundation/Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony HttpFoundation Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-05-26 19:02:51"
+        },
+        {
             "name": "symfony/yaml",
             "version": "v2.5.0",
             "target-dir": "Symfony/Component/Yaml",
@@ -956,9 +1012,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "symfony/http-foundation": 20
+    },
     "platform": {
         "php": ">=5.5"
     },

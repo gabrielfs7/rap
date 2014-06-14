@@ -4,18 +4,24 @@ namespace GSoares\RAP\Serializer;
 use GSoares\RAP\Map\Property;
 use GSoares\RAP\Parser\AnnotationParser;
 use GSoares\RAP\Map\AbstractParam;
+use GSoares\RAP\Parser\AnnotationParserInterface;
 
+/**
+ * Class JsonSerializer
+ *
+ * @package GSoares\RAP\Serializer
+ */
 class JsonSerializer
 {
     /**
-     * @var AnnotationParser
+     * @var AnnotationParserInterface
      */
     private $annotationParser;
 
     /**
-     * @param AnnotationParser $annotationParser
+     * @param AnnotationParserInterface $annotationParser
      */
-    public function __construct(AnnotationParser $annotationParser = null)
+    public function __construct(AnnotationParserInterface $annotationParser = null)
     {
         $this->annotationParser = $annotationParser ?: new AnnotationParser();
     }
