@@ -4,6 +4,9 @@ namespace GSoares\RAP\Factory;
 use GSoares\RAP\Map\Property;
 
 /**
+ * Class PropertyMappedFactory
+ *
+ * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 class PropertyMappedFactory extends AbstractParamMappedFactory

@@ -5,6 +5,7 @@ namespace GSoares\RAP\Request;
 use GSoares\RAP\Exception\RequiredParameterMissingException;
 use GSoares\RAP\Factory\ParamMappedRequestFactory;
 use GSoares\RAP\Map\MapInterface;
+use GSoares\RAP\Parser\RequestJsonParser;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,11 +22,16 @@ class ParamRequestValidator implements RequestValidatorInterface
     private $paramMappedRequestFactory;
 
     /**
-     * @param ParamMappedRequestFactory $paramMappedRequestFactory
+     * @var RequestJsonParser
      */
-    public function __construct(ParamMappedRequestFactory $paramMappedRequestFactory = null)
-    {
+    private $requestJsonParser;
+
+    public function __construct(
+        ParamMappedRequestFactory $paramMappedRequestFactory = null,
+        RequestJsonParser $requestJsonParser = null
+    ) {
         $this->paramMappedRequestFactory = $paramMappedRequestFactory ?: new ParamMappedRequestFactory();
+        $this->requestJsonParser = $requestJsonParser ?: new RequestJsonParser();
     }
 
     /**
@@ -36,10 +42,12 @@ class ParamRequestValidator implements RequestValidatorInterface
      */
     public function validate(MapInterface $map, Request $request)
     {
-        if (empty($request->get($map->getName())) && $map->isRequired()) {
+        $requestData = $this->requestJsonParser->parse($request);
+
+        if (empty($requestData[$map->getName()]) && $map->isRequired()) {
             throw new RequiredParameterMissingException($map->getName());
         }
 
-        return $this->paramMappedRequestFactory->create($request, $map);
+        return $this->paramMappedRequestFactory->create($requestData, $map);
     }
 } 

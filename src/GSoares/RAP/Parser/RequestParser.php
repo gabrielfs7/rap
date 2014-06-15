@@ -44,15 +44,16 @@ class RequestParser implements RequestParserInterface
         $this->paramValidator = $paramValidator ?: new ParamRequestValidator();
     }
 
+    /**
+     * @param string $method
+     * @param Request $request
+     * @return array|mixed
+     */
     public function parse($method, Request $request)
     {
-        $data = $this->validateMethod($method);
-
-        $maps = $this->annotationParser->parse($this->getDocComment($data[0], $data[1]));
-
         $out = [];
 
-        foreach ($maps as $map) {
+        foreach ($this->parseMethod($method) as $map) {
             if ($map instanceof Resource) {
                 $this->resourceValidator->validate($map, $request);
             }
@@ -80,7 +81,7 @@ class RequestParser implements RequestParserInterface
      * @return array
      * @throws \InvalidArgumentException
      */
-    private function validateMethod($method)
+    private function parseMethod($method)
     {
         list ($class, $method) = explode('::', $method);
 
@@ -92,6 +93,6 @@ class RequestParser implements RequestParserInterface
             throw new \InvalidArgumentException("Method '$class::$method' does not exists'");
         }
 
-        return [$class, $method];
+        return $this->annotationParser->parse($this->getDocComment($class, $method));
     }
 }

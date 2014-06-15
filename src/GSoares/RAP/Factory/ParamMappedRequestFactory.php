@@ -20,69 +20,44 @@ class ParamMappedRequestFactory
      */
     private $paramMappedFactory;
 
-    public function __construct(ParamMappedFactory $paramMappedFactory = null)
-    {
-        $this->paramMappedFactory = $paramMappedFactory ?: new ParamMappedFactory();
-    }
-
-    public function create(Request $request, AbstractParam $param)
-    {
-        $paramValue = $request->get($param->getName());
-
-        if ($param->isPrimitive()) {
-            if (!$param->isArray()) {
-                return $paramValue;
-            }
-
-            if (!is_array($paramValue)) {
-                throw new InvalidConfigurationException(
-                    'Invalid configuration "' . $paramValue . '" for parameter "' . $param->getName() . '"'
-                );
-            }
-
-            if (empty($paramValue) && $param->isRequired()) {
-                throw new RequiredParameterMissingException($param->getName());
-            }
-
-            return $paramValue;
-        }
-
-        if ($param->isClass()) {
-            return $this->createClass($param->getType(), $paramValue);
-        }
-    }
+    /**
+     * @var RequestClassFactory
+     */
+    private $requestClassFactory;
 
     /**
-     * @param $className
-     * @param array $request
-     * @return object
+     * @var RequestPrimitiveValueFactory
      */
-    private function createClass($className, array $request)
+    private $requestPrimitiveValueFactory;
+
+    public function __construct(
+        ParamMappedFactory $paramMappedFactory = null,
+        RequestClassFactory $requestClassFactory = null,
+        RequestPrimitiveValueFactory $requestPrimitiveValueFactory = null
+    ) {
+        $this->paramMappedFactory = $paramMappedFactory ?: new ParamMappedFactory();
+        $this->requestClassFactory = $requestClassFactory ?: new RequestClassFactory();
+        $this->requestPrimitiveValueFactory = $requestPrimitiveValueFactory ?: new RequestPrimitiveValueFactory();
+    }
+
+    public function create(array $request, AbstractParam $param)
     {
-        //TODO FIXME Incomplete method...
+        $paramValue = $request[$param->getName()];
 
-        $reflection = new \ReflectionClass($className);
-        $properties = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
-        $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
-
-        $class = new $className;
-
-        foreach ($properties as $property) {
-            if (array_key_exists($property->getName(), $request) &&
-                $property->getName() == $request[$property->getName()]) {
-                $class->{$property->getName()} = $request[$property->getName()];
-            }
+        if ($param->isPrimitive()) {
+            return $this->requestPrimitiveValueFactory->create($param, $paramValue);
         }
 
-        foreach ($methods as $method) {
-            $paramName = str_replace('set', '', $method->getName());
-
-            if (array_key_exists($paramName, $request) &&
-                strcasecmp($method->getName(), 'set' . $paramName) === 0) {
-                $class->{$method->getName()}($request[$paramName]);
-            }
+        if (!$param->isArray()) {
+            return $this->requestClassFactory->create($param->getType(), $paramValue);
         }
 
-        return $class;
+        $out = [];
+
+        foreach ($paramValue as $value) {
+            $out[] = $this->requestClassFactory->create($param->getType(), $value);
+        }
+
+        return $out;
     }
 }
