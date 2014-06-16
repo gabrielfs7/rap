@@ -35,12 +35,11 @@ class RequestClassFactory
      */
     private function fillProperties(\ReflectionClass $reflectionClass, $class, array $request)
     {
-        //TODO Incompleted method
-
         foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
-            if (array_key_exists($property->getName(), $request) &&
-                $property->getName() == $request[$property->getName()]) {
+            if (array_key_exists($property->getName(), $request)) {
                 $class->{$property->getName()} = $request[$property->getName()];
+
+                //TODO Verify if property is an object, then fill the same...
             }
         }
     }
@@ -52,8 +51,6 @@ class RequestClassFactory
      */
     private function fillMethods(\ReflectionClass $reflectionClass, $class, array $request)
     {
-        //TODO Incompleted method
-
         foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
             $paramName = str_replace('set', '', $method->getName());
 

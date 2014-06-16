@@ -16,7 +16,7 @@ class Group
     public $name;
 
     /**
-     * @var string
+     * @var int
      * @RAP/Property(
      *     "type" => "integer",
      *     "name" => "members",
@@ -28,7 +28,7 @@ class Group
     public $members;
 
     /**
-     * @var string
+     * @var GroupCategory
      * @RAP/Property(
      *     "type" => "Sample\GroupCategory[]",
      *     "name" => "groupCategory",
