@@ -5,6 +5,7 @@ namespace GSoares\RAP\Serializer;
  * Class JsonFormatter
  *
  * @package GSoares\RAP\Serializer
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 class JsonFormatter
 {

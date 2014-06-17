@@ -4,6 +4,9 @@ namespace GSoares\RAP\Factory;
 use GSoares\RAP\Map\Param;
 
 /**
+ * Class AbstractParamMappedFactoryTest
+ *
+ * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 class AbstractParamMappedFactoryTest extends \PHPUnit_Framework_TestCase

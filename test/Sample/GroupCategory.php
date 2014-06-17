@@ -1,6 +1,12 @@
 <?php
 namespace Sample;
 
+/**
+ * Class GroupCategory
+ *
+ * @package Sample
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 class GroupCategory
 {
     /**

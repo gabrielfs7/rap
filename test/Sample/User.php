@@ -1,6 +1,12 @@
 <?php
 namespace Sample;
 
+/**
+ * Class User
+ *
+ * @package Sample
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 class User
 {
     /**

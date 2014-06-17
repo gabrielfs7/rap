@@ -2,11 +2,17 @@
 namespace GSoares\RAP\Map;
 
 /**
+ * Class HttpResponseStatus
+ *
+ * @package GSoares\RAP\Map
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 class HttpResponseStatus
 {
 
+    /**
+     * @var array
+     */
     public static $statusTexts = array(
         100 => 'Continue',
         101 => 'Switching Protocols',

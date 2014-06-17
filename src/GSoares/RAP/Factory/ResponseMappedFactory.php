@@ -6,6 +6,9 @@ use GSoares\RAP\Exception\InvalidConfigurationException;
 use GSoares\RAP\Map\Param;
 
 /**
+ * Class ResponseMappedFactory
+ *
+ * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 class ResponseMappedFactory
@@ -13,7 +16,8 @@ class ResponseMappedFactory
 
     /**
      * @param array $data
-     * @return \GSoares\RAP\Map\Response
+     * @return Response
+     * @throws \GSoares\RAP\Exception\InvalidConfigurationException
      */
     public function create(array $data)
     {

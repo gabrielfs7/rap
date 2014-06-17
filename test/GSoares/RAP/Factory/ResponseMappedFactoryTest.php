@@ -5,6 +5,9 @@ use GSoares\RAP\Map\Response;
 use GSoares\RAP\Map\Param;
 
 /**
+ * Class ResponseMappedFactoryTest
+ *
+ * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 class ResponseMappedFactoryTest extends \PHPUnit_Framework_TestCase

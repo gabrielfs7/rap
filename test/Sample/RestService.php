@@ -1,6 +1,12 @@
 <?php
 namespace Sample;
 
+/**
+ * Class RestService
+ *
+ * @package Sample
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 class RestService
 {
     /**

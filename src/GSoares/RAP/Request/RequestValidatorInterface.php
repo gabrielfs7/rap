@@ -2,14 +2,14 @@
 
 namespace GSoares\RAP\Request;
 
-
 use GSoares\RAP\Map\MapInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class RequestValidatorInterface
+ * Interface RequestValidatorInterface
  *
  * @package GSoares\RAP\Request
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 interface RequestValidatorInterface
 {

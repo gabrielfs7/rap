@@ -4,9 +4,10 @@ namespace GSoares\RAP\Parser;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class RequestParserInterface
+ * Interface RequestParserInterface
  *
  * @package GSoares\RAP\Parser
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 interface RequestParserInterface
 {

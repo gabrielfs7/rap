@@ -2,7 +2,11 @@
 namespace GSoares\RAP\Map;
 
 use GSoares\RAP\Exception\InvalidTypeException;
+
 /**
+ * Class AbstractParam
+ *
+ * @package GSoares\RAP\Map
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 abstract class AbstractParam implements MapInterface

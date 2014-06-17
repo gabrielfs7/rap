@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class RequestJsonParser
  *
  * @package GSoares\RAP\Parser
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 class RequestJsonParser
 {

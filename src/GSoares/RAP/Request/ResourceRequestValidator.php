@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class ResourceRequestValidator
  *
  * @package GSoares\RAP\Request
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 class ResourceRequestValidator implements RequestValidatorInterface
 {

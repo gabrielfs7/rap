@@ -40,6 +40,11 @@ class ParamMappedRequestFactory
         $this->requestPrimitiveValueFactory = $requestPrimitiveValueFactory ?: new RequestPrimitiveValueFactory();
     }
 
+    /**
+     * @param array $request
+     * @param AbstractParam $param
+     * @return array|float|int|mixed|string
+     */
     public function create(array $request, AbstractParam $param)
     {
         $paramValue = $request[$param->getName()];

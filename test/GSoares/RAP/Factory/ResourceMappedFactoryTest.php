@@ -3,8 +3,15 @@ namespace GSoares\RAP\Factory;
 
 use GSoares\RAP\Map\Resource;
 
+/**
+ * Class ResourceMappedFactoryTest
+ *
+ * @package GSoares\RAP\Factory
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 class ResourceMappedFactoryTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @var ResourceMappedFactory
      */

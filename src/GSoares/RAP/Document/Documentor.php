@@ -1,6 +1,12 @@
 <?php
 namespace GSoares\RAP\Document;
 
+/**
+ * Class Documentor
+ *
+ * @package GSoares\RAP\Document
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 class Documentor
 {
     const BOOTSTRAP_CSS_URL = 'cssUrl';
@@ -43,9 +49,10 @@ class Documentor
     }
 
     /**
-     * @param string $cssUrl
-     * @param string $responsiveCssUrl
-     * @param string $javascriptUrl
+     * @param $cssUrl
+     * @param $responsiveCssUrl
+     * @param $javascriptUrl
+     * @param $jqueryUrl
      */
     public static function configBootstrapResource($cssUrl, $responsiveCssUrl, $javascriptUrl, $jqueryUrl)
     {
@@ -59,13 +66,16 @@ class Documentor
 
     /**
      * @param string $configIndex
-     * @return mixed
+     * @return string
      */
     public static function getConfig($configIndex)
     {
         return isset(self::$config[$configIndex]) ? self::$config[$configIndex] : null;
     }
 
+    /**
+     * @return string
+     */
     public static function getHost()
     {
         return $_SERVER['HTTP_HOST'];

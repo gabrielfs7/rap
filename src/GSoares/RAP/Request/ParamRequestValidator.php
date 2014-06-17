@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class ParamRequestValidator
  *
  * @package GSoares\RAP\Request
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
 class ParamRequestValidator implements RequestValidatorInterface
 {
@@ -26,6 +27,10 @@ class ParamRequestValidator implements RequestValidatorInterface
      */
     private $requestJsonParser;
 
+    /**
+     * @param ParamMappedRequestFactory $paramMappedRequestFactory
+     * @param RequestJsonParser $requestJsonParser
+     */
     public function __construct(
         ParamMappedRequestFactory $paramMappedRequestFactory = null,
         RequestJsonParser $requestJsonParser = null

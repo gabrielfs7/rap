@@ -1,9 +1,15 @@
 <?php
 namespace GSoares\RAP\Map;
 
-
+/**
+ * Class ResourceDocument
+ *
+ * @package GSoares\RAP\Map
+ * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
+ */
 class ResourceDocument implements MapInterface
 {
+
     /**
      * @var string
      */
