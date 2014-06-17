@@ -30,7 +30,7 @@ class Group
     /**
      * @var GroupCategory
      * @RAP/Property(
-     *     "type" => "Sample\GroupCategory[]",
+     *     "type" => "Sample\GroupCategory",
      *     "name" => "groupCategory",
      *     "required" => true,
      *     "help" => "Group Category"
