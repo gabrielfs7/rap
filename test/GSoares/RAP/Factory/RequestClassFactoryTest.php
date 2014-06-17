@@ -40,10 +40,15 @@ class RequestClassFactoryTest extends \PHPUnit_Framework_TestCase
         $groupCategory->name = 'Programing';
         $groupCategory->code = 10;
 
+        $groupStatus = new Status();
+        $groupStatus->code = 9;
+        $groupStatus->name = 'Inactive';
+
         $group = new Group();
         $group->name = 'PHP Fans';
         $group->members = 777;
         $group->groupCategory = $groupCategory;
+        $group->setStatus($groupStatus);
 
         $user = new User();
         $user->name = 'John Smith';
@@ -66,6 +71,10 @@ class RequestClassFactoryTest extends \PHPUnit_Framework_TestCase
                 [
                     'name' => current($user->groups)->name,
                     'members' => current($user->groups)->members,
+                    'status' => [
+                        'name' => $groupStatus->name,
+                        'code' => $groupStatus->code
+                    ],
                     'groupCategory' => [
                         'code' => $groupCategory->code,
                         'name' => $groupCategory->name

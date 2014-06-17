@@ -1,11 +1,11 @@
 <?php
 
 namespace GSoares\RAP\Factory;
+
 use GSoares\RAP\Map\AbstractParam;
 use GSoares\RAP\Map\Property;
 use GSoares\RAP\Parser\AnnotationParser;
 use GSoares\RAP\Parser\AnnotationParserInterface;
-
 
 /**
  * Class RequestClassFactory
@@ -37,48 +37,26 @@ class RequestClassFactory
     public function create($className, array $request)
     {
         $class = new $className;
-        $reflectionClass = new \ReflectionClass($className);
 
-        $this->fillProperties($reflectionClass, $class, $request);
-        $this->fillMethods($reflectionClass, $class, $request);
+        foreach ((new \ReflectionClass($className))->getProperties() as $property) {
+            if (!$param = $this->getParamByProperty($property, $request)) {
+                continue;
+            }
+
+            $value = $this->getValueByRequest($param, $request[$property->getName()]);
+
+            if ($property->isPublic()) {
+                $class->{$property->getName()} = $value;
+
+                continue;
+            }
+
+            if (method_exists($class, 'set' . $property->getName())) {
+                $class->{'set' . $property->getName()}($value);
+            }
+        }
 
         return $class;
-    }
-
-    /**
-     * @param \ReflectionClass $reflectionClass
-     * @param string $class
-     * @param array $request
-     */
-    private function fillProperties(\ReflectionClass $reflectionClass, $class, array $request)
-    {
-        foreach ($reflectionClass->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
-            if (array_key_exists($property->getName(), $request)) {
-                $class->{$property->getName()} = $this->getValueByRequest(
-                    $this->getPropertyByAnnotation($property->getDocComment()),
-                    $request[$property->getName()]
-                );
-            }
-        }
-    }
-
-    /**
-     * @param \ReflectionClass $reflectionClass
-     * @param string $class
-     * @param array $request
-     */
-    private function fillMethods(\ReflectionClass $reflectionClass, $class, array $request)
-    {
-        //TODO FIXME Methods implementation...
-
-        foreach ($reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-            $paramName = str_replace('set', '', $method->getName());
-
-            if (array_key_exists($paramName, $request) &&
-                strcasecmp($method->getName(), 'set' . $paramName) === 0) {
-                $class->{$method->getName()}($request[$paramName]);
-            }
-        }
     }
 
     /**
@@ -110,14 +88,15 @@ class RequestClassFactory
     }
 
     /**
-     * @param $annotationComment
-     * @return \GSoares\RAP\Map\Property
+     * @param \ReflectionProperty $property
+     * @param array $request
+     * @return \GSoares\RAP\Map\AbstractParam
      */
-    private function getPropertyByAnnotation($annotationComment)
+    private function getParamByProperty(\ReflectionProperty $property, array $request)
     {
-        foreach ($this->annotationParser->parse($annotationComment) as $property) {
-            if ($property instanceof Property) {
-                return $property;
+        foreach ($this->annotationParser->parse($property->getDocComment()) as $param) {
+            if ($param instanceof Property && array_key_exists($property->getName(), $request)) {
+                return $param;
             }
         }
     }

@@ -37,4 +37,23 @@ class Group
      * )
      */
     public $groupCategory;
+
+    /**
+     * @var Status
+     * @RAP/Property(
+     *     "type" => "Sample\Status",
+     *     "name" => "status",
+     *     "required" => true,
+     *     "help" => "Group Status"
+     * )
+     */
+    private $status;
+
+    /**
+     * @param Status $status
+     */
+    public function setStatus(Status $status)
+    {
+        $this->status = $status;
+    }
 }
