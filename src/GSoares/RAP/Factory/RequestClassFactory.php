@@ -6,6 +6,8 @@ use GSoares\RAP\Map\AbstractParam;
 use GSoares\RAP\Map\Property;
 use GSoares\RAP\Parser\AnnotationParser;
 use GSoares\RAP\Parser\AnnotationParserInterface;
+use GSoares\RAP\Parser\ClassPropertyParser;
+use GSoares\RAP\Request\RequestPropertyParamFinder;
 
 /**
  * Class RequestClassFactory
@@ -22,11 +24,23 @@ class RequestClassFactory
     private $annotationParser;
 
     /**
-     * @param AnnotationParserInterface $annotationParser
+     * @var ClassPropertyParser
      */
-    public function __construct(AnnotationParserInterface $annotationParser = null)
-    {
+    private $classPropertyParser;
+
+    /**
+     * @var RequestPropertyParamFinder
+     */
+    private $requestPropertyParamFinder;
+
+    public function __construct(
+        AnnotationParserInterface $annotationParser = null,
+        RequestPropertyParamFinder $requestPropertyParamFinder = null,
+        ClassPropertyParser $classPropertyParser = null
+    ) {
+        $this->classPropertyParser = $classPropertyParser ?: new ClassPropertyParser();
         $this->annotationParser = $annotationParser ?: new AnnotationParser();
+        $this->requestPropertyParamFinder = $requestPropertyParamFinder ?: new RequestPropertyParamFinder();
     }
 
     /**
@@ -36,27 +50,17 @@ class RequestClassFactory
      */
     public function create($className, array $request)
     {
-        $class = new $className;
+        $object = new $className;
 
         foreach ((new \ReflectionClass($className))->getProperties() as $property) {
-            if (!$param = $this->getParamByProperty($property, $request)) {
-                continue;
-            }
+            if ($param = $this->requestPropertyParamFinder->find($property, $request)) {
+                $value = $this->getValueByRequest($param, $request[$property->getName()]);
 
-            $value = $this->getValueByRequest($param, $request[$property->getName()]);
-
-            if ($property->isPublic()) {
-                $class->{$property->getName()} = $value;
-
-                continue;
-            }
-
-            if (method_exists($class, 'set' . $property->getName())) {
-                $class->{'set' . $property->getName()}($value);
+                $this->classPropertyParser->parse($object, $property, $value);
             }
         }
 
-        return $class;
+        return $object;
     }
 
     /**
@@ -85,19 +89,5 @@ class RequestClassFactory
         }
 
         return $requestValue;
-    }
-
-    /**
-     * @param \ReflectionProperty $property
-     * @param array $request
-     * @return \GSoares\RAP\Map\AbstractParam
-     */
-    private function getParamByProperty(\ReflectionProperty $property, array $request)
-    {
-        foreach ($this->annotationParser->parse($property->getDocComment()) as $param) {
-            if ($param instanceof Property && array_key_exists($property->getName(), $request)) {
-                return $param;
-            }
-        }
     }
 }
