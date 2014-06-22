@@ -34,7 +34,6 @@ class ClassPropertyParser
      * @param $object
      * @param \ReflectionProperty $property
      * @param $value
-     * @return mixed
      */
     public function parse($object, \ReflectionProperty $property, $value)
     {

@@ -32,18 +32,26 @@ class RequestParser implements RequestParserInterface
     private $paramValidator;
 
     /**
+     * @var ClassMethodParser
+     */
+    private $classMethodParser;
+
+    /**
      * @param AnnotationParserInterface $annotationParser
      * @param RequestValidatorInterface $resourceValidator
      * @param RequestValidatorInterface $paramValidator
+     * @param ClassMethodParser $classMethodParser
      */
     public function __construct(
         AnnotationParserInterface $annotationParser = null,
         RequestValidatorInterface $resourceValidator = null,
-        RequestValidatorInterface $paramValidator = null
+        RequestValidatorInterface $paramValidator = null,
+        ClassMethodParser $classMethodParser = null
     ) {
         $this->annotationParser = $annotationParser ?: new AnnotationParser();
         $this->resourceValidator = $resourceValidator ?: new ResourceRequestValidator();
         $this->paramValidator = $paramValidator ?: new ParamRequestValidator();
+        $this->classMethodParser = $classMethodParser ?: new ClassMethodParser();
     }
 
     /**
@@ -55,7 +63,7 @@ class RequestParser implements RequestParserInterface
     {
         $out = [];
 
-        foreach ($this->parseMethod($method) as $map) {
+        foreach ($this->classMethodParser->parse($method) as $map) {
             if ($map instanceof Resource) {
                 $this->resourceValidator->validate($map, $request);
             }
@@ -66,35 +74,5 @@ class RequestParser implements RequestParserInterface
         }
 
         return $out;
-    }
-
-    /**
-     * @param $class
-     * @param $method
-     * @return string
-     */
-    private function getDocComment($class, $method)
-    {
-        return (new \ReflectionClass($class))->getMethod($method)->getDocComment();
-    }
-
-    /**
-     * @param $method
-     * @return array
-     * @throws \InvalidArgumentException
-     */
-    private function parseMethod($method)
-    {
-        list ($class, $method) = explode('::', $method);
-
-        if (!class_exists($class)) {
-            throw new \InvalidArgumentException("Class '$class' does not exists'");
-        }
-
-        if (!method_exists($class, $method)) {
-            throw new \InvalidArgumentException("Method '$class::$method' does not exists'");
-        }
-
-        return $this->annotationParser->parse($this->getDocComment($class, $method));
     }
 }

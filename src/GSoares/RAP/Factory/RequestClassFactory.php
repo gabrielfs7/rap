@@ -3,7 +3,6 @@
 namespace GSoares\RAP\Factory;
 
 use GSoares\RAP\Map\AbstractParam;
-use GSoares\RAP\Map\Property;
 use GSoares\RAP\Parser\AnnotationParser;
 use GSoares\RAP\Parser\AnnotationParserInterface;
 use GSoares\RAP\Parser\ClassPropertyParser;
@@ -70,15 +69,7 @@ class RequestClassFactory
      */
     private function getValueByRequest(AbstractParam $param, $requestValue)
     {
-        if (!$param->isArray()) {
-            if ($param->isClass()) {
-                return $this->create($param->getType(), $requestValue);
-            }
-
-            return $requestValue;
-        }
-
-        if ($param->isClass()) {
+        if ($param->isArray() && $param->isClass()) {
             $out = [];
 
             foreach ($requestValue as $value) {
@@ -86,6 +77,10 @@ class RequestClassFactory
             }
 
             return $out;
+        }
+
+        if ($param->isClass()) {
+            return $this->create($param->getType(), $requestValue);
         }
 
         return $requestValue;
