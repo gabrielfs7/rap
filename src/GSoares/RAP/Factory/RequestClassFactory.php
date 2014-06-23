@@ -53,9 +53,7 @@ class RequestClassFactory
 
         foreach ((new \ReflectionClass($className))->getProperties() as $property) {
             if ($param = $this->requestPropertyParamFinder->find($property, $request)) {
-                $value = $this->getValueByRequest($param, $request[$property->getName()]);
-
-                $this->classPropertyParser->parse($object, $property, $value);
+                $this->fillObject($object, $param, $property, $request);
             }
         }
 
@@ -63,20 +61,27 @@ class RequestClassFactory
     }
 
     /**
+     * @param $object
      * @param AbstractParam $param
-     * @param $requestValue
+     * @param \ReflectionProperty $property
+     * @param array $request
+     */
+    private function fillObject($object, AbstractParam $param, \ReflectionProperty $property, array $request)
+    {
+        $this->classPropertyParser->parse($object, $property, $this->getValueByRequest($param, $request));
+    }
+
+    /**
+     * @param AbstractParam $param
+     * @param array $request
      * @return array|mixed
      */
-    private function getValueByRequest(AbstractParam $param, $requestValue)
+    private function getValueByRequest(AbstractParam $param, array $request)
     {
+        $requestValue = $request[$param->getName()];
+
         if ($param->isArray() && $param->isClass()) {
-            $out = [];
-
-            foreach ($requestValue as $value) {
-                $out[] = $this->create($param->getType(), (array) $value);
-            }
-
-            return $out;
+            return $this->createClassArrayValue($requestValue, $param);
         }
 
         if ($param->isClass()) {
@@ -84,5 +89,21 @@ class RequestClassFactory
         }
 
         return $requestValue;
+    }
+
+    /**
+     * @param array $requestValue
+     * @param AbstractParam $param
+     * @return array
+     */
+    private function createClassArrayValue(array $requestValue, AbstractParam $param)
+    {
+        $out = [];
+
+        foreach ($requestValue as $value) {
+            $out[] = $this->create($param->getType(), (array) $value);
+        }
+
+        return $out;
     }
 }
