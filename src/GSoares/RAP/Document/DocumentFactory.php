@@ -131,6 +131,7 @@ class DocumentFactory
 
         $out = $resource->getMethod() . ' ' . $resource->getUri() . ($q ? ('?' . $q) : null ) . ' HTTP/1.1';
         $out.= PHP_EOL . 'Host: ' . Documentor::getHost();
+        $out.= PHP_EOL . 'Accept: application/json';
         $out.= PHP_EOL . 'Content-Type: application/json';
 
         if (count($sample) && $resource->getMethod() !== 'GET') {
