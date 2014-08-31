@@ -149,4 +149,18 @@ class Resource implements MapInterface
     {
         $this->sample = $sample;
     }
+
+    /**
+     * @return boolean
+     */
+    public function receivesJsonContent()
+    {
+        foreach ($this->getParams() as $param) {
+            if ($param->isArray() | $param->isClass()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

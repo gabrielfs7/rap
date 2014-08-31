@@ -133,12 +133,27 @@ class DocumentFactory
         $out.= PHP_EOL . 'Host: ' . Documentor::getHost();
         $out.= PHP_EOL . 'Accept: application/json';
         $out.= PHP_EOL . 'Content-Type: application/json';
-
-        if (count($sample) && $resource->getMethod() !== 'GET') {
-            $out .= PHP_EOL . JsonFormatter::format(json_encode($sample));
-        }
+        $out.= PHP_EOL . PHP_EOL . $this->createHeaderContent($resource, $sample);
 
         return $out;
+    }
+
+    /**
+     * @param Resource $resource
+     * @param array $sample
+     * @return string
+     */
+    private function createHeaderContent(Resource $resource, array $sample)
+    {
+        if (count($sample) == 0 || $resource->getMethod() === 'GET') {
+            return '';
+        }
+
+        if ($resource->receivesJsonContent()) {
+            return JsonFormatter::format(json_encode($sample));
+        }
+
+        return http_build_query((array) $sample);
     }
 
     /**
