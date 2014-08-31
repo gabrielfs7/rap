@@ -30,5 +30,11 @@
     </table>
 </div>
 <?php } ?>
-<p>Request Example:</p>
-<pre><?php echo $resource->getSample(); ?></pre>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Request Example:
+    </div>
+    <div class="panel-body">
+        <pre><?php echo $resource->getSample(); ?></pre>
+    </div>
+</div>
