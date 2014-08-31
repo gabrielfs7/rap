@@ -17,6 +17,7 @@
         position: fixed;
         z-index: 3;
         width: 100%;
+        border-bottom: 5px solid #0088CC;
     }
 
     .page-header a {
