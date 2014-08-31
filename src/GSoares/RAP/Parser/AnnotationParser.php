@@ -1,6 +1,7 @@
 <?php
 namespace GSoares\RAP\Parser;
 
+use GSoares\RAP\Exception\AnnotationParseException;
 use GSoares\RAP\Factory\ParamMappedFactory;
 use GSoares\RAP\Factory\ResourceMappedFactory;
 use GSoares\RAP\Factory\ResponseMappedFactory;
@@ -86,18 +87,25 @@ class AnnotationParser implements AnnotationParserInterface
     }
 
     /**
-     * @param string $annotation
-     * @param string $part
-     * @return array
+     * @param $annotation
+     * @param $part
+     * @return mixed|string
+     * @throws \GSoares\RAP\Exception\AnnotationParseException
      */
     private function toArray($annotation, $part)
     {
-        $part = preg_replace("/[\n]/", '', $part);
-        $part = preg_replace("/ {2,}/", ' ', $part);
-        $part = trim(ltrim($part, $annotation));
-        $part[0] = '[';
-        $part[strlen($part) - 1] = ']';
-        $part = eval("return($part);");
+        try {
+            $part = preg_replace("/[\n]/", '', $part);
+            $part = preg_replace("/ {2,}/", ' ', $part);
+            $part = trim(ltrim($part, $annotation));
+            $part[0] = '[';
+            $part[strlen($part) - 1] = ']';
+            $part = eval("return($part);");
+        } catch (\Exception $e) {
+            throw new AnnotationParseException(
+                'Annotation: ' . $annotation . '. Part: ' . $part, $e
+            );
+        }
 
         return $part;
     }

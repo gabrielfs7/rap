@@ -87,9 +87,9 @@ class Documentor
     {
         ErrorHandler::register();
 
+        $classesDoc = (new DocumentFactory())->create(self::$classes);
+
         ob_start();
-        $document = new DocumentFactory();
-        $classesDoc = $document->create(self::$classes);
 
         include realpath(__DIR__ . '/../../../../template/apidoc.php');
 
