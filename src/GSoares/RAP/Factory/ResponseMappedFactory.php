@@ -6,8 +6,6 @@ use GSoares\RAP\Exception\InvalidConfigurationException;
 use GSoares\RAP\Map\Param;
 
 /**
- * Class ResponseMappedFactory
- *
  * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

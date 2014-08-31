@@ -1,9 +1,8 @@
 <?php
 namespace GSoares\RAP\Document;
+use GSoares\RAP\Exception\ErrorHandler;
 
 /**
- * Class Documentor
- *
  * @package GSoares\RAP\Document
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
@@ -86,11 +85,14 @@ class Documentor
      */
     public static function document()
     {
+        ErrorHandler::register();
+
         ob_start();
         $document = new DocumentFactory();
         $classesDoc = $document->create(self::$classes);
 
         include realpath(__DIR__ . '/../../../../template/apidoc.php');
+
         return ob_get_clean();
     }
 }

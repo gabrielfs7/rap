@@ -9,8 +9,6 @@ use GSoares\RAP\Parser\RequestJsonParser;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class ParamRequestValidator
- *
  * @package GSoares\RAP\Request
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

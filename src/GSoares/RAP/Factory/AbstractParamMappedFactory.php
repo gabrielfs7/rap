@@ -5,8 +5,6 @@ use GSoares\RAP\Exception\InvalidConfigurationException;
 use GSoares\RAP\Map\AbstractParam;
 
 /**
- * Class AbstractParamMappedFactory
- *
  * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

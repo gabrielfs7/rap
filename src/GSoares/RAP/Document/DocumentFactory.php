@@ -12,8 +12,6 @@ use GSoares\RAP\Serializer\JsonFormatter;
 use GSoares\RAP\Map\ResourceDocument;
 
 /**
- * Class DocumentFactory
- *
  * @package GSoares\RAP\Document
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

@@ -2,8 +2,6 @@
 namespace GSoares\RAP\Exception;
 
 /**
- * Class InvalidRequestMethodException
- *
  * @package GSoares\RAP\Exception
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

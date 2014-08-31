@@ -5,7 +5,7 @@ namespace GSoares\RAP\Exception;
  * @package GSoares\RAP\Exception
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
-class InvalidConfigurationException extends RAPException
+class AnnotationParserException extends RAPException
 {
-    const CODE = 2;
+    const CODE = 6;
 }

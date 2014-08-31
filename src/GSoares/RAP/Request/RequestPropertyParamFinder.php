@@ -7,8 +7,6 @@ use GSoares\RAP\Parser\AnnotationParser;
 use GSoares\RAP\Parser\AnnotationParserInterface;
 
 /**
- * Class RequestPropertyParamFinder
- *
  * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

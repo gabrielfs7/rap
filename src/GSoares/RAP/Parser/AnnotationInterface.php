@@ -2,8 +2,6 @@
 namespace GSoares\RAP\Parser;
 
 /**
- * Interface AnnotationInterface
- *
  * @package GSoares\RAP\Parser
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

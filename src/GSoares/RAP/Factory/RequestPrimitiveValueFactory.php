@@ -5,8 +5,6 @@ namespace GSoares\RAP\Factory;
 use GSoares\RAP\Map\AbstractParam;
 
 /**
- * Class RequestPrimitiveValueFactory
- *
  * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

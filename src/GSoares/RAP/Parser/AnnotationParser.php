@@ -8,8 +8,6 @@ use GSoares\RAP\Parser\AnnotationInterface as Ai;
 use GSoares\RAP\Factory\PropertyMappedFactory;
 
 /**
- * Class AnnotationParser
- *
  * @package GSoares\RAP\Parser
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

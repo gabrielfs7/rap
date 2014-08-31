@@ -4,8 +4,6 @@ namespace GSoares\RAP\Map;
 use GSoares\RAP\Exception\InvalidStatusCodeException;
 
 /**
- * Class Response
- *
  * @package GSoares\RAP\Map
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

@@ -5,8 +5,6 @@ use GSoares\RAP\Map\Resource;
 use GSoares\RAP\Exception\InvalidConfigurationException;
 
 /**
- * Class ResourceMappedFactory
- *
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  * @package GSoares\RAP\Factory
  */

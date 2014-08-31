@@ -1,14 +1,9 @@
 <?php
 namespace GSoares\RAP\Factory;
 
-use GSoares\RAP\Exception\InvalidConfigurationException;
-use GSoares\RAP\Exception\RequiredParameterMissingException;
 use GSoares\RAP\Map\AbstractParam;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class ParamMappedRequestFactory
- *
  * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

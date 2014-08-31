@@ -2,8 +2,6 @@
 namespace GSoares\RAP\Map;
 
 /**
- * Class Resource
- *
  * @package GSoares\RAP\Map
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

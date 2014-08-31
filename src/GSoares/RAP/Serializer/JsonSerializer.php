@@ -7,8 +7,6 @@ use GSoares\RAP\Map\AbstractParam;
 use GSoares\RAP\Parser\AnnotationParserInterface;
 
 /**
- * Class JsonSerializer
- *
  * @package GSoares\RAP\Serializer
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

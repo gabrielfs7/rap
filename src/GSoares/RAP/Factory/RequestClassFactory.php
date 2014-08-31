@@ -9,8 +9,6 @@ use GSoares\RAP\Parser\ClassPropertyParser;
 use GSoares\RAP\Request\RequestPropertyParamFinder;
 
 /**
- * Class RequestClassFactory
- *
  * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

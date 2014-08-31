@@ -9,8 +9,6 @@ use GSoares\RAP\Parser\AnnotationParserInterface;
 use GSoares\RAP\Request\RequestParamRetriever;
 
 /**
- * Class ClassPropertyParser
- *
  * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
