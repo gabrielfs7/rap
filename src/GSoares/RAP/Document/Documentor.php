@@ -22,7 +22,7 @@ class Documentor
      * @var array
      */
     private static $config = [
-        self::BOOTSTRAP_CSS_URL => 'http://getbootstrap.com/2.3.2/assets/css/bootstrap.css',
+        self::BOOTSTRAP_CSS_URL => 'http://getbootstrap.com/dist/css/bootstrap.min.css',
         self::BOOTSTRAP_RESPONSIVE_CSS_URL => 'http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css',
         self::BOOTSTRAP_JAVASCRIPT_URL => 'http://getbootstrap.com/dist/js/bootstrap.min.js',
         self::JQUERY_URL => 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'
