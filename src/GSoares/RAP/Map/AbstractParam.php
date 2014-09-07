@@ -29,6 +29,11 @@ abstract class AbstractParam implements MapInterface
     /**
      * @var string
      */
+    private $pattern;
+
+    /**
+     * @var string
+     */
     private $sample;
 
     /**
@@ -107,6 +112,22 @@ abstract class AbstractParam implements MapInterface
         }
 
         $this->type = $type;
+    }
+
+    /**
+     * @param string $pattern
+     */
+    public function setPattern($pattern)
+    {
+        $this->pattern = $pattern;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPattern()
+    {
+        return $this->pattern;
     }
 
 	/**

@@ -8,8 +8,6 @@ use Sample\Status;
 use Sample\User;
 
 /**
- * Class RequestClassFactoryTest
- *
  * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */

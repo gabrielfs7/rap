@@ -4,8 +4,6 @@ namespace GSoares\RAP\Factory;
 use GSoares\RAP\Map\Param;
 
 /**
- * Class AbstractParamMappedFactoryTest
- *
  * @package GSoares\RAP\Factory
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
  */
@@ -40,6 +38,7 @@ class AbstractParamMappedFactoryTest extends \PHPUnit_Framework_TestCase
         $data = [
 	       'help' => 'Help text',
 	       'name' => 'myName',
+	       'pattern' => '[a-z]',
 	       'type' => 'string',
 	       'required' => true,
 	       'sample' => 'Sample text',
@@ -54,6 +53,7 @@ class AbstractParamMappedFactoryTest extends \PHPUnit_Framework_TestCase
         $param->setName('myName');
         $param->setRequired(true);
         $param->setSample('Sample text');
+        $param->setPattern('[a-z]');
 
         $this->assertEquals($param, $this->factory->createByParam($data, new Param()));
     }

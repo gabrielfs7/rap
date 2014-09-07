@@ -23,6 +23,7 @@ abstract class AbstractParamMappedFactory
         $param->setRequired(isset($data['required']) ? boolval($data['required']) : false);
         $param->setSample(isset($data['sample']) ? $data['sample'] : null);
         $param->setDefault(isset($data['default']) ? $data['default'] : null);
+        $param->setPattern(isset($data['pattern']) ? $data['pattern'] : null);
 
         if (!isset($data['type'])) {
             throw new InvalidConfigurationException('Configuration "type" required');
