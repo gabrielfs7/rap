@@ -102,9 +102,7 @@ class AnnotationParser implements AnnotationParserInterface
             $part[strlen($part) - 1] = ']';
             $part = eval("return($part);");
         } catch (\Exception $e) {
-            throw new AnnotationParseException(
-                'Annotation: ' . $annotation . '. Part: ' . $part, $e
-            );
+            throw new AnnotationParseException('Annotation: ' . $annotation . '. Part: ' . $part, $e);
         }
 
         return $part;
