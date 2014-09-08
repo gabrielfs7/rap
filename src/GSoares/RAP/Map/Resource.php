@@ -163,4 +163,31 @@ class Resource implements MapInterface
 
         return false;
     }
+
+    /**
+     * @return array
+     */
+    public function getUriParamNames()
+    {
+        $matches = [];
+
+        $pieces = preg_split('/[\{.\}]+/', $this->getUri());
+
+        foreach ($pieces as $piece) {
+            if (strstr($piece, '/') === false && !empty($piece)) {
+                $matches[] = $piece;
+            }
+        }
+
+        return $matches;
+    }
+
+    /**
+     * @param Param $param
+     * @return bool
+     */
+    public function isUriParam(Param $param)
+    {
+        return in_array($param->getName(), $this->getUriParamNames());
+    }
 }

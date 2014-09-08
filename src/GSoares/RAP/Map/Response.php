@@ -43,8 +43,9 @@ class Response implements MapInterface
         return $this->status;
     }
 
-	/**
-     * @param string $status
+    /**
+     * @param integer $status
+     * @throws \GSoares\RAP\Exception\InvalidStatusCodeException
      */
     public function setStatus($status)
     {

@@ -5,6 +5,7 @@ use GSoares\RAP\Exception\AnnotationParseException;
 use GSoares\RAP\Factory\ParamMappedFactory;
 use GSoares\RAP\Factory\ResourceMappedFactory;
 use GSoares\RAP\Factory\ResponseMappedFactory;
+use GSoares\RAP\Map\Resource;
 use GSoares\RAP\Parser\AnnotationInterface as Ai;
 use GSoares\RAP\Factory\PropertyMappedFactory;
 
@@ -63,9 +64,12 @@ class AnnotationParser implements AnnotationParserInterface
 
         $out = [];
 
+        $resource = null;
+        $params = [];
+
         foreach ($parts as $part) {
             if (strpos($part, Ai::RESOURCE) === 0) {
-                $out[] = $this->resourceMappedFactory->create($this->toArray(Ai::RESOURCE, $part));
+                $out[] = $resource = $this->resourceMappedFactory->create($this->toArray(Ai::RESOURCE, $part));
             }
 
             if (strpos($part, Ai::RESPONSE) === 0) {
@@ -75,12 +79,19 @@ class AnnotationParser implements AnnotationParserInterface
             }
 
             if (strpos($part, Ai::PARAM) === 0) {
-                $out[] = $this->paramMappedFactory->create($this->toArray(Ai::PARAM, $part));
+                $param = $this->paramMappedFactory->create($this->toArray(Ai::PARAM, $part));
+
+                $params[] = $param;
+                $out[] = $param;
             }
 
             if (strpos($part, Ai::PROPERTY) === 0) {
                 $out[] = $this->propertyMappedFactory->create($this->toArray(Ai::PROPERTY, $part));
             }
+        }
+
+        if ($resource instanceof Resource) {
+            $this->relateUriParams($params, $resource);
         }
 
         return $out;
@@ -106,5 +117,18 @@ class AnnotationParser implements AnnotationParserInterface
         }
 
         return $part;
+    }
+
+    /**
+     * @param array $params
+     * @param Resource $resource
+     */
+    private function relateUriParams(array $params, Resource $resource)
+    {
+        foreach ($params as $param) {
+            if ($resource->isUriParam($param)) {
+                $param->setIsUriParam(true);
+            }
+        }
     }
 }
