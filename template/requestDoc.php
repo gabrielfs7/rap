@@ -20,7 +20,7 @@
         <tr>
             <td><?php echo $param->getName(); ?></td>
             <td><?php echo $param->isClass() ? 'Object' : $param->getType(); ?></td>
-            <td><?php echo ($param->isRequired() ? '<i class="icon-ok"></i>' : ''); ?></td>
+            <td><?php echo ($param->isRequired() ? '<i class="icon-ok"></i> YES' : ''); ?></td>
             <td><?php echo $param->getDefault(); ?></td>
             <td><?php echo $param->getSample(); ?></td>
             <td><?php echo $param->getHelp(); ?></td>
