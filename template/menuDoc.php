@@ -8,7 +8,7 @@
         </li>
         <?php foreach ($class->getResources() as $resource) { ?>
         <li>
-            <a href="#method<?php echo $resource->getUri(); ?>">
+            <a href="#method<?php echo $resource->getMethod() . $resource->getUri(); ?>">
                 <?php echo $resource->getMethod() . ' ' . $resource->getUri(); ?>
             </a>
         </li>

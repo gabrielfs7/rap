@@ -1,6 +1,6 @@
-<div class="panel panel-default">
+<div class="panel panel-success">
     <div class="panel-heading">
-        Response(s) for <?php echo $resource->getMethod() . ' ' . $resource->getUri(); ?>
+        Response(s):
     </div>
     <div class="panel-body">
         <?php foreach ($resource->getResponses() as $response) { ?>

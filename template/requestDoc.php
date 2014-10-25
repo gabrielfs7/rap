@@ -1,8 +1,7 @@
 <?php if (count($resource->getParams())) { ?>
-<div class="panel panel-default">
+<div class="panel panel-info">
     <div class="panel-heading">
-        Request parameter(s) for:
-        <?php echo $resource->getMethod() . ' ' . $resource->getUri(); ?>
+        Request parameter(s):
     </div>
     <table class="table">
         <thead>
@@ -30,11 +29,9 @@
     </table>
 </div>
 <?php } ?>
-<div class="panel panel-default">
+<div class="panel panel-info">
     <div class="panel-heading">
         Request Example:
     </div>
-    <div class="panel-body">
-        <pre><?php echo $resource->getSample(); ?></pre>
-    </div>
+    <pre class="code-sample"><?php echo $resource->getSample(); ?></pre>
 </div>

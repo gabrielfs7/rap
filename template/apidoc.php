@@ -15,18 +15,22 @@
         background: #285e8e;
         color: #FFF;
         position: fixed;
-        z-index: 3;
+        z-index: 10000;
         width: 100%;
         border-bottom: 5px solid #0088CC;
+    }
+
+    .page-header h1, .page-header p {
+        float: left;
+    }
+
+    .page-header p {
+        padding: 30px 20px 0px 20px;
     }
 
     .page-header a {
         color: #EAEAEA;
         font-size: 11px;
-    }
-
-    .col-lg-12 {
-        margin-top: 90px;
     }
 
     #wrapper {
@@ -49,7 +53,7 @@
         height: 100%;
         margin-left: -30%;
         overflow-y: auto;
-        background: #444444;
+        background: #d9edf7;
         -webkit-transition: all 0.5s ease;
         -moz-transition: all 0.5s ease;
         -o-transition: all 0.5s ease;
@@ -89,12 +93,11 @@
     .sidebar-nav li a {
         display: block;
         text-decoration: none;
-        color: #999999;
+        color: #428bca;
     }
 
     .sidebar-nav li a:hover {
         text-decoration: none;
-        color: #fff;
         background: rgba(255,255,255,0.2);
     }
 
@@ -108,18 +111,26 @@
     }
 
     .sidebar-nav > .sidebar-brand {
-        background: #333;
+        background: #FFF;
         font-weight: bold;
         font-size: 15px;
     }
 
     .sidebar-nav > .sidebar-brand a {
-        color: #999999;
+        color: #428bca;
     }
 
-    .sidebar-nav > .sidebar-brand a:hover {
-        color: #fff;
-        background: none;
+    .header-space {
+        display:block;
+        height: 50px;
+    }
+
+    .code-sample
+    {
+        border: none;
+        background-color: #faf2cc;
+        margin: 0;
+        padding: 20px;
     }
 
     @media(min-width:768px) {
@@ -146,6 +157,7 @@
         #wrapper.toggled #page-content-wrapper {
             position: relative;
             margin-right: 0;
+            background: #EAEAEA !important;
         }
     }
 </style>
@@ -164,6 +176,7 @@
                 <a href="#menu-toggle" id="menu-toggle">(Toggle Menu)</a>
             </p>
         </div>
+        <div class="header-space"></div>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">

@@ -127,7 +127,7 @@ class DocumentFactory
      */
     private function createHeader(Resource $resource, array $sample)
     {
-        $q = $resource->getMethod() == 'GET' && count($sample) ? http_build_query($sample) : null;
+        $q = $resource->getMethod() == 'GET' && count($sample) ? urldecode(http_build_query($sample)) : null;
 
         $out = $resource->getMethod() . ' ' . $resource->getUri() . ($q ? ('?' . $q) : null ) . ' HTTP/1.1';
         $out.= PHP_EOL . 'Host: ' . Documentor::getHost();
